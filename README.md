@@ -72,6 +72,42 @@ app.listen(port, () => {
 console.log(`Сервер запущен на порту ${port}`);
 });
 
+Eslint Prettier
+
+npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-node eslint-config-node
+npx install-peerdeps --dev eslint-config-airbnb
+
+create eslintrc.json
+{
+"extends": ["airbnb", "prettier", "plugin:node/recommended"],
+"plugins": ["prettier"],
+"rules": {
+"prettier/prettier": "error",
+"no-unused-vars": "warn",
+"no-console": "off",
+"func-names": "off",
+"no-process-exit": "off",
+"object-shorthand": "off",
+"class-methods-use-this": "off"
+}
+}
+
+Configure ESLint by running this command :
+eslint --init
+
+eslintrc.json
+
+создать в корне .prettierrc.json и вставить
+
+{
+"semi": true,
+"trailingComma": "all",
+"singleQuote": true,
+"printWidth": 100,
+"tabWidth": 2,
+"arrowParens": "always"
+}
+
 create dockerfile
 
 # используем образ node:18
@@ -101,24 +137,3 @@ COPY . .
 # Запустите приложение при старте контейнера
 
 CMD ["npm", "run", "dev"]
-
-Eslint Prettier
-
-npm init --y
-
-npm install eslint eslint-config-prettier prettier –-save-dev
-Configure ESLint by running this command :
-eslint --init
-
-eslintrc.json
-
-создать в корне .prettierrc.json и вставить
-
-{
-"semi": true,
-"trailingComma": "all",
-"singleQuote": true,
-"printWidth": 100,
-"tabWidth": 2,
-"arrowParens": "always"
-}
