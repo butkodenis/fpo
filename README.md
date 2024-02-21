@@ -1,29 +1,6 @@
-### git
+#### Client React
 
-create .gitignore
-
-```python
- node_modules/
-
- /.pnp
- .pnp.js
- # testing
- /coverage
- # production
- /build
- # misc
- .DS_Store
- .env.local
- .env.development.local
- .env.test.local
- .env.production.local
- npm-debug.log*
- yarn-debug.log*
- yarn-error.log\*
- .vscode/settings.json
-```
-
-### Client React
+1. установить vite
 
 ```javascript
 npm create vite@latest client
@@ -31,10 +8,13 @@ cd client
 npm install
 ```
 
+2. добавить Eslint Prettier
+
 ```javascript
 npm install --save-dev prettier eslint-config-airbnb eslint-config-prettier eslint-plugin-prettier
-змінюємо в .eslintrc.cjs
 ```
+
+3. заменяем в .eslintrc.cjs
 
 ```javascript
 module.exports = {
@@ -75,7 +55,7 @@ module.exports = {
 };
 ```
 
-создать в корне .prettierrc.json и вставить
+4. создать в корне .prettierrc.json и вставить
 
 ```json
 {
@@ -88,19 +68,22 @@ module.exports = {
 }
 ```
 
-### 2 Server Express
+#### Server (Express)
 
-    mkdir server
-    cd server
-    npm init --y
+1. создать папку для серверной части
+   mkdir server
+   cd server
+   npm init --y
 
-```python
+2. установить нужные модули
+
+```
     npm install express cors morgan bcrypt cookie-parser nodemon jsonwebtoken mongodb mongoose dotenv
 ```
 
-chenge package.json
+3. добавить nodemon в package.json для перезагрузки сервера
 
-```python
+```
    .....
    "scripts": {
    .....
@@ -110,9 +93,9 @@ chenge package.json
    .....
 ```
 
-create app.js
+4. создать сервер app.js
 
-```python
+```
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -133,17 +116,18 @@ console.log(`Сервер запущен на порту ${port}`);
 });
 ```
 
-### Eslint Prettier
+5. доабавить Eslint Prettier (для разработки)
 
 ```
 npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-node eslint-config-node
+
 ```
 
 ```
 npx install-peerdeps --dev eslint-config-airbnb
 ```
 
-create eslintrc.json
+создать в корне (server) eslintrc.json
 
 ```json
 {
@@ -190,22 +174,22 @@ eslintrc.json
    "....
    },
 
-2. create dockerfile
+2. создать .dockerfile
 
-```json
-#используем образ node:18
+```javascript
+# используем образ node:18
 FROM node:18
 # устанавливаем директорию приложения внутри контейнера
 WORKDIR /app
-
+# копируем package.json и package-lock.json для установки зависимостей
 COPY ./package*.json .
-
+# устанавливаем зависимости приложения
 RUN npm install
-
+# Копируйте все файлы вашего приложения в рабочую директорию в контейнере
 COPY . .
-
-EXPOSE 5173
-
+# Указываем порт, на котором будет работать приложение
+#EXPOSE 5173
+# Запустите приложение при старте контейнера
 CMD [ "npm", "run", "dev-exposed" ]
 ```
 
@@ -218,39 +202,29 @@ CMD [ "npm", "run", "dev-exposed" ]
     "start": "node app.js"
     },
 
-2.  create dockerfile
+2.  create .dockerfile
 
-    # используем образ node:18
+```javascript
+# используем образ node:18
+FROM node:18
+# устанавливаем директорию приложения внутри контейнера
+WORKDIR /app
+# копируем package.json и package-lock.json для установки зависимостей
+COPY package*.json .
+# устанавливаем зависимости приложения
+RUN npm install
+# Копируйте все файлы вашего приложения в рабочую директорию в контейнере
+COPY . .
+# Указываем порт, на котором будет работать приложение
+# EXPOSE 4040
+# Запустите приложение при старте контейнера
+CMD ["npm", "run", "dev"]
 
-    FROM node:18
+```
 
-    # устанавливаем директорию приложения внутри контейнера
+#### Docker-compose
 
-    WORKDIR /app
-
-    # копируем package.json и package-lock.json для установки зависимостей
-
-    COPY package\*.json .
-
-    # устанавливаем зависимости приложения
-
-    RUN npm install
-
-    # Копируйте все файлы вашего приложения в рабочую директорию в контейнере
-
-    COPY . .
-
-    # Указываем порт, на котором будет работать приложение
-
-    # EXPOSE 4040
-
-    # Запустите приложение при старте контейнера
-
-    CMD ["npm", "run", "dev"]
-
-### Docker-compose
-
-```console
+```javascript
 version: '3.8'
 services:
   server:
@@ -280,12 +254,38 @@ services:
       # local->container
       - '5173:5173'
     volumes:
-      - ./client:/usr/src/app:delegated
-      - /usr/src/app/node_modules/
+      - ./client:/app
+      - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
       - TZ=Europe/Kiev
     depends_on:
       - server
 
+
+```
+
+#### Git
+
+create .gitignore
+
+```git
+ node_modules/
+
+ /.pnp
+ .pnp.js
+ # testing
+ /coverage
+ # production
+ /build
+ # misc
+ .DS_Store
+ .env.local
+ .env.development.local
+ .env.test.local
+ .env.production.local
+ npm-debug.log*
+ yarn-debug.log*
+ yarn-error.log\*
+ .vscode/settings.json
 ```

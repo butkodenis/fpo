@@ -9,7 +9,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 
 app.get('/api/test', (req, res) => {
-  res.json({ message: 'Hello from server!' });
+  res.json({ message: 'Hello from server' });
 });
 
 const port = process.env.NODE_PORT || 4000;
