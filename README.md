@@ -2,31 +2,33 @@
 
 create .gitignore
 
-node_modules/
+```python
+ node_modules/
 
-/.pnp
-.pnp.js
+ /.pnp
+ .pnp.js
 
-# testing
+ # testing
 
-/coverage
+ /coverage
 
-# production
+ # production
 
-/build
+ /build
 
-# misc
+ # misc
 
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+ .DS_Store
+ .env.local
+ .env.development.local
+ .env.test.local
+ .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log\*
-.vscode/settings.json
+ npm-debug.log*
+ yarn-debug.log*
+ yarn-error.log\*
+ .vscode/settings.json
+```
 
 1 client React
 mkdir client
@@ -35,24 +37,29 @@ vite
 
 ### 2 Server Express
 
-mkdir server
-cd server
-npm init --y
+    mkdir server
+    cd server
+    npm init --y
 
-npm install express cors morgan bcrypt cookie-parser nodemon jsonwebtoken mongodb mongoose dotenv
+```python
+    npm install express cors morgan bcrypt cookie-parser nodemon jsonwebtoken mongodb mongoose dotenv
+```
 
 chenge package.json
 
-.....
-"scripts": {
-.....
-"dev": "nodemon -L app.js",
-"start": "node app.js"
-},
-.....
+```python
+   .....
+   "scripts": {
+   .....
+   "dev": "nodemon -L app.js",
+   "start": "node app.js"
+   },
+   .....
+```
 
 create app.js
 
+```python
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -71,26 +78,35 @@ const port = process.env.NODE_PORT || 4000;
 app.listen(port, () => {
 console.log(`Сервер запущен на порту ${port}`);
 });
+```
 
-Eslint Prettier
+### Eslint Prettier
 
+```
 npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-node eslint-config-node
+```
+
+```
 npx install-peerdeps --dev eslint-config-airbnb
+```
 
 create eslintrc.json
+
+```json
 {
-"extends": ["airbnb", "prettier", "plugin:node/recommended"],
-"plugins": ["prettier"],
-"rules": {
-"prettier/prettier": "error",
-"no-unused-vars": "warn",
-"no-console": "off",
-"func-names": "off",
-"no-process-exit": "off",
-"object-shorthand": "off",
-"class-methods-use-this": "off"
+  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off"
+  }
 }
-}
+```
 
 Configure ESLint by running this command :
 eslint --init
@@ -99,41 +115,45 @@ eslintrc.json
 
 создать в корне .prettierrc.json и вставить
 
+```json
 {
-"semi": true,
-"trailingComma": "all",
-"singleQuote": true,
-"printWidth": 100,
-"tabWidth": 2,
-"arrowParens": "always"
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "arrowParens": "always"
 }
+```
+
+### Docker
 
 create dockerfile
 
-# используем образ node:18
+    # используем образ node:18
 
-FROM node:18
+    FROM node:18
 
-# устанавливаем директорию приложения внутри контейнера
+    # устанавливаем директорию приложения внутри контейнера
 
-WORKDIR /app
+    WORKDIR /app
 
-# копируем package.json и package-lock.json для установки зависимостей
+    # копируем package.json и package-lock.json для установки зависимостей
 
-COPY package\*.json .
+    COPY package\*.json .
 
-# устанавливаем зависимости приложения
+    # устанавливаем зависимости приложения
 
-RUN npm install
+    RUN npm install
 
-# Копируйте все файлы вашего приложения в рабочую директорию в контейнере
+    # Копируйте все файлы вашего приложения в рабочую директорию в контейнере
 
-COPY . .
+    COPY . .
 
-# Указываем порт, на котором будет работать приложение
+    # Указываем порт, на котором будет работать приложение
 
-# EXPOSE 4040
+    # EXPOSE 4040
 
-# Запустите приложение при старте контейнера
+    # Запустите приложение при старте контейнера
 
-CMD ["npm", "run", "dev"]
+    CMD ["npm", "run", "dev"]

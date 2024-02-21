@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    container_name: server
+    restart: unless-stopped
+    env_file: ./server/.env
+    ports:
+      # local->container
+      - $NODE_PORT:$NODE_PORT
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - TZ=Europe/Kiev
