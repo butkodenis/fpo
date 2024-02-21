@@ -1,4 +1,4 @@
-## git
+### git
 
 create .gitignore
 
@@ -25,14 +25,18 @@ create .gitignore
 
 ### Client React
 
+```javascript
 npm create vite@latest client
 cd client
 npm install
+```
+
+```javascript
 npm install --save-dev prettier eslint-config-airbnb eslint-config-prettier eslint-plugin-prettier
-првим в .eslintrc.cjs
+змінюємо в .eslintrc.cjs
+```
 
-```json
-
+```javascript
 module.exports = {
   root: true,
   env: {
