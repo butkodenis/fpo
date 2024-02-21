@@ -7,33 +7,82 @@ create .gitignore
 
  /.pnp
  .pnp.js
-
  # testing
-
  /coverage
-
  # production
-
  /build
-
  # misc
-
  .DS_Store
  .env.local
  .env.development.local
  .env.test.local
  .env.production.local
-
  npm-debug.log*
  yarn-debug.log*
  yarn-error.log\*
  .vscode/settings.json
 ```
 
-1 client React
-mkdir client
+### Client React
+
+npm create vite@latest client
 cd client
-vite
+npm install
+npm install --save-dev prettier eslint-config-airbnb eslint-config-prettier eslint-plugin-prettier
+првим в .eslintrc.cjs
+
+```json
+
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es2020: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+    'airbnb',
+    'airbnb/hooks',
+    'prettier',
+    'prettier/react',
+  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  settings: {
+    react: {
+      version: '18.2',
+    },
+  },
+  plugins: ['react-refresh', 'prettier'],
+  rules: {
+    'react/jsx-no-target-blank': 'off',
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+    'prettier/prettier': 'error',
+  },
+};
+```
+
+создать в корне .prettierrc.json и вставить
+
+```json
+{
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "arrowParens": "always"
+}
+```
 
 ### 2 Server Express
 
@@ -128,7 +177,44 @@ eslintrc.json
 
 ### Docker
 
-create dockerfile
+##### Client
+
+1. добавить в package.json
+   "scripts": {
+   ....
+   "dev-exposed": "vite --host",
+   "....
+   },
+
+2. create dockerfile
+
+```json
+#используем образ node:18
+FROM node:18
+# устанавливаем директорию приложения внутри контейнера
+WORKDIR /app
+
+COPY ./package*.json .
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 5173
+
+CMD [ "npm", "run", "dev-exposed" ]
+```
+
+##### Server
+
+1.  добавить в package.json
+    "scripts": {
+    ....
+    "dev": "nodemon -L app.js",
+    "start": "node app.js"
+    },
+
+2.  create dockerfile
 
     # используем образ node:18
 
@@ -157,3 +243,45 @@ create dockerfile
     # Запустите приложение при старте контейнера
 
     CMD ["npm", "run", "dev"]
+
+### Docker-compose
+
+```console
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    container_name: server
+    restart: unless-stopped
+    env_file: ./server/.env
+    ports:
+      # local->container
+      - 4004:4004
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - TZ=Europe/Kiev
+
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    container_name: client
+    stdin_open: true
+    tty: true
+    ports:
+      # local->container
+      - '5173:5173'
+    volumes:
+      - ./client:/usr/src/app:delegated
+      - /usr/src/app/node_modules/
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - TZ=Europe/Kiev
+    depends_on:
+      - server
+
+```

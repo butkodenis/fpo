@@ -9,9 +9,28 @@ services:
     env_file: ./server/.env
     ports:
       # local->container
-      - $NODE_PORT:$NODE_PORT
+      - 4004:4004
     volumes:
       - ./server:/app
       - /app/node_modules
     environment:
       - TZ=Europe/Kiev
+
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    container_name: client
+    stdin_open: true
+    tty: true
+    ports:
+      # local->container
+      - '5173:5173'
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - TZ=Europe/Kiev
+    depends_on:
+      - server
