@@ -6,10 +6,10 @@ services:
       dockerfile: dockerfile
     container_name: server
     restart: unless-stopped
-    env_file: ./server/.env
+    env_file: .env
     ports:
       # local->container
-      - 4000:4000
+      - $NODE_PORT:$NODE_PORT
     volumes:
       - ./server:/app
       - /app/node_modules
@@ -25,7 +25,7 @@ services:
     tty: true
     ports:
       # local->container
-      - '5173:5173'
+      - '5000:5000'
     volumes:
       - ./client:/app
       - /app/node_modules
