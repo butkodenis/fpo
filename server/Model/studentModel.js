@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cardStudentsSchema = new mongoose.Schema({
+const cardStudentSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: { type: String, required: true },
@@ -21,9 +21,11 @@ const cardStudentsSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
       activ: { type: Boolean, default: false },
+      startCourse: { type: Date },
+      endCourse: { type: Date },
     },
   ],
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('CardStudents', cardStudentsSchema);
+module.exports = mongoose.model('CardStudent', cardStudentSchema);

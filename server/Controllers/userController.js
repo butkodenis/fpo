@@ -18,9 +18,9 @@ const registerUser = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'Користувача створено успішно' });
+    return res.status(201).json({ message: 'Користувача створено успішно' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -47,9 +47,9 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: existingUser._id }, process.env.TOKEN_KEY, { expiresIn: '1h' });
 
     res.cookie('token', token, { withCredentials: true, httpOnly: false });
-    res.status(200).json({ message: 'Ви увійшли в систему успішно' });
+    return res.status(200).json({ message: 'Ви увійшли в систему успішно' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 

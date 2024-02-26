@@ -4,7 +4,7 @@ services:
     build:
       context: ./server
       dockerfile: dockerfile
-    container_name: server
+    container_name: fpo-api
     restart: unless-stopped
     env_file: .env
     ports:
@@ -20,7 +20,7 @@ services:
     build:
       context: ./client
       dockerfile: dockerfile
-    container_name: client
+    container_name: fpo-client
     stdin_open: true
     tty: true
     ports:
