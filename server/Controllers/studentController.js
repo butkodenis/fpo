@@ -6,7 +6,8 @@ const createStudent = async (req, res) => {
     console.log(` ${firstName} _ ${lastName} _ ${middleName}`);
 
     // перевірка чи студент вже існує
-    const existingStudent = await CardStudent.findOne({ firstName, lastName, middleName }).save();
+    const existingStudent = await CardStudent.findOne({ firstName, lastName, middleName });
+
     if (existingStudent) {
       return res.status(400).json({ message: 'Студент вже існує' });
     }

@@ -4,6 +4,7 @@ const cardStudentSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: { type: String, required: true },
+  /*
   info: {
     age: { type: Number, required: true },
     passport_id: { type: String },
@@ -25,6 +26,7 @@ const cardStudentSchema = new mongoose.Schema({
       endCourse: { type: Date },
     },
   ],
+  */
   createdAt: { type: Date, default: Date.now },
 });
 

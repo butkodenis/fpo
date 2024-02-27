@@ -10,6 +10,7 @@ const { MONGO_URL, NODE_PORT } = process.env;
 const port = NODE_PORT || 4001;
 
 const userRoute = require('./Routes/userRoute');
+const studentRoute = require('./Routes/studentRoute');
 
 mongoose
   .connect(MONGO_URL, {
@@ -25,6 +26,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api', userRoute);
+app.use('/api', studentRoute);
+app.use('/api', require('./Routes/courseRoute'));
 
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);
