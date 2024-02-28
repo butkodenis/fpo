@@ -2,9 +2,9 @@ const Course = require('../Model/courseModel');
 
 const getAllCourses = async (req, res) => {
   try {
-    // const courses = await Course.find();
+    const courses = await Course.find();
 
-    res.status(200).json({ message: 'All courses' });
+    res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -12,7 +12,7 @@ const getAllCourses = async (req, res) => {
 
 const createCourse = async (req, res) => {
   try {
-    const { typeCourse, specialty, duration, price, order } = req.body;
+    const { typeCourse, specialty, duration, price, order, orderDate } = req.body;
 
     const existingCourse = await Course.findOne({ typeCourse, specialty, duration, price, order });
 
@@ -26,6 +26,7 @@ const createCourse = async (req, res) => {
       duration,
       price,
       order,
+      orderDate,
     });
     await newCourse.save();
     res.status(201).json({ message: 'Курс додано' });
