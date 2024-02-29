@@ -33,7 +33,7 @@ const createStudent = async (req, res) => {
       return res.status(400).json({ message: 'Студент вже існує' });
     }
 
-    const student = new CardStudent({ firstName, lastName, middleName, info, course });
+    const student = new CardStudent({ firstName, lastName, middleName, info });
     await student.save();
     return res.status(201).json({ message: `Студента створено успішно : ${student.id}` });
   } catch (error) {
