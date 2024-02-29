@@ -4,17 +4,17 @@ const cardStudentSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: { type: String, required: true },
-  /*
+
   info: {
-    age: { type: Number, required: true },
+    age: { type: Number },
     passport_id: { type: String },
     address: {
-      city: { String, required: true },
-      street: { String, required: true },
-      house: { String, required: true },
-      flat: { String, required: true },
+      city: { type: String },
+      street: { type: String },
+      house: { type: String },
+      flat: { type: String },
     },
-    phone: { type: String, required: true },
+    phone: { type: String },
     email: { type: String },
   },
   course: [
@@ -26,7 +26,7 @@ const cardStudentSchema = new mongoose.Schema({
       endCourse: { type: Date },
     },
   ],
-  */
+
   createdAt: { type: Date, default: Date.now },
 });
 
