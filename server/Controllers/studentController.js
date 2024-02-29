@@ -12,7 +12,7 @@ const getAllStudents = async (req, res) => {
 const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await CardStudent.findOne({ _id: id });
+    const student = await CardStudent.findOne({ _id: id }).populate('course');
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
@@ -24,7 +24,7 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { firstName, lastName, middleName, info, course } = req.body;
+    const { firstName, lastName, middleName, phone, courseId } = req.body;
 
     // перевірка чи студент вже існує
     const existingStudent = await CardStudent.findOne({ firstName, lastName, middleName });
@@ -33,9 +33,9 @@ const createStudent = async (req, res) => {
       return res.status(400).json({ message: 'Студент вже існує' });
     }
 
-    const student = new CardStudent({ firstName, lastName, middleName, info });
+    const student = new CardStudent({ firstName, lastName, middleName, phone, course: courseId });
     await student.save();
-    return res.status(201).json({ message: `Студента створено успішно : ${student.id}` });
+    return res.status(201).json({ message: `Студента створено успішно` });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
