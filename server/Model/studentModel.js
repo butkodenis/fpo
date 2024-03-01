@@ -6,7 +6,7 @@ const studentSchema = new mongoose.Schema({
   middleName: { type: String, required: true },
   phone: { type: String },
 
-  course: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+  courses: [],
 
   createdAt: { type: Date, default: Date.now },
 });

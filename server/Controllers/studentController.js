@@ -1,8 +1,8 @@
-const CardStudent = require('../Model/studentModel');
+const Student = require('../Model/studentModel');
 
 const getAllStudents = async (req, res) => {
   try {
-    const students = await CardStudent.find();
+    const students = await Student.find();
     return res.status(200).json(students);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ const getAllStudents = async (req, res) => {
 const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await CardStudent.findOne({ _id: id }).populate('course');
+    const student = await Student.findById(id).populate('courses.course');
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
@@ -24,16 +24,16 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { firstName, lastName, middleName, phone, courseId } = req.body;
+    const { firstName, lastName, middleName, phone } = req.body;
 
     // перевірка чи студент вже існує
-    const existingStudent = await CardStudent.findOne({ firstName, lastName, middleName });
+    const existingStudent = await Student.findOne({ firstName, lastName, middleName });
 
     if (existingStudent) {
       return res.status(400).json({ message: 'Студент вже існує' });
     }
 
-    const student = new CardStudent({ firstName, lastName, middleName, phone, course: courseId });
+    const student = new Student({ firstName, lastName, middleName, phone });
     await student.save();
     return res.status(201).json({ message: `Студента створено успішно` });
   } catch (error) {
@@ -46,11 +46,11 @@ const updateStudent = async (req, res) => {
     const { id } = req.params;
     const { firstName, lastName, middleName } = req.body;
 
-    const existingStudent = await CardStudent.findOne({});
+    const existingStudent = await Student.findOne({});
     if (!existingStudent) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    await CardStudent.findByIdAndUpdate(id, { firstName, lastName, middleName });
+    await Student.findByIdAndUpdate(id, { firstName, lastName, middleName });
     return res.status(200).json({ message: 'Студента оновлено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -59,7 +59,7 @@ const updateStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await CardStudent.findByIdAndDelete(id);
+    const student = await Student.findByIdAndDelete(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
