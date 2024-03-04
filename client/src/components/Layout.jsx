@@ -8,7 +8,7 @@ const Layout = () => {
         <div class="flex justify-between bg-gray-800 p-4 text-white">
           <div class="text-xl font-semibold">Admin Panel</div>
         </div>
-        <div class="flex-grow overflow-y-auto bg-gray-900 p-4">
+        <div class="no-scrollbar  flex-grow overflow-y-auto bg-gray-900 p-4">
           <nav class="space-y-2">
             <Link
               to="/"
@@ -22,11 +22,17 @@ const Layout = () => {
             >
               Login
             </Link>
+            <Link
+              to="/logout"
+              class="block rounded px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              Logout
+            </Link>
           </nav>
         </div>
       </div>
 
-      <div class="flex-grow p-4">
+      <div class="flex-grow p-2">
         <Outlet />
       </div>
     </div>
