@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Header() {
+const Header = () => {
   return (
-    <header>
+    <header className="bg-grey-300 h-full w-72">
       <h1>React Router</h1>
       <nav>
         <ul>
@@ -18,6 +17,6 @@ function Header() {
       </nav>
     </header>
   );
-}
+};
 
 export default Header;
