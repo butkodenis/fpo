@@ -1,19 +1,21 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="col-md-3">
-      <h2>Sidebar</h2>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/users">Users</Link>
-        </li>
-      </ul>
-    </div>
+    <nav id="sidebar" className=" bg-info">
+      <div className="">
+        <h3>Меню</h3>
+        <ul className="list-unstyled">
+          <li>
+            <Link to="/">Главная</Link>
+          </li>
+          <li>
+            <Link to="/users">Пользователи</Link>
+          </li>
+          <li>Контакты</li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 
