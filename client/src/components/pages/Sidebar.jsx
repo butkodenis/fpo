@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <nav id="sidebar" className="d-flex flex-column  bg-info">
+    <nav id="sidebar" className="d-flex flex-column  ">
       <div className="d-flex flex-column align-items-center">
         <h3 className="text-center">Меню</h3>
         <div className="container">
@@ -10,6 +10,11 @@ const Sidebar = () => {
             <li className="mb-2">
               <Link to="/" className="btn btn-primary btn-block text-left">
                 Головна
+              </Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/students" className="btn btn-primary btn-block text-left">
+                Студенти
               </Link>
             </li>
             <li className="mb-2">
