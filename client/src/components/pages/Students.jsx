@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Students = () => {
+  const [students, setStudents] = useState([]);
+
   return (
     <div className="d-flex flex-column   ">
       <h1>Students</h1>
