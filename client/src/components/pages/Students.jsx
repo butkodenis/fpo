@@ -1,14 +1,14 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Students = () => {
   const [students, setStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const fetchStudents = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/getAll`);
       setStudents(res.data);
-      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -17,6 +17,16 @@ const Students = () => {
   useEffect(() => {
     fetchStudents();
   }, []);
+
+  const showAdditionalInfo = (studentId) => {
+    // Выбираем студента для отображения дополнительной информации
+    setSelectedStudent(studentId);
+  };
+
+  const hideAdditionalInfo = () => {
+    // Скрываем дополнительную информацию
+    setSelectedStudent(null);
+  };
 
   return (
     <div className="d-flex flex-column">
@@ -35,54 +45,72 @@ const Students = () => {
         </thead>
         <tbody>
           {students.map((student) => (
-            <tr key={student._id}>
-              <td>{student.firstName}</td>
-              <td>{student.lastName}</td>
-              <td>{student.middleName}</td>
-              <td>{student.phone}</td>
-              <td>
-                {student.courses.length > 0 &&
-                  new Date(student.courses[student.courses.length - 1].startDate)
-                    .toISOString()
-                    .split('T')[0]}
-              </td>
-              <td>
-                {student.courses.length > 0 &&
-                  new Date(student.courses[student.courses.length - 1].endDate)
-                    .toISOString()
-                    .split('T')[0]}
-              </td>
-
-              <td>
-                <div className="dropdown">
+            <React.Fragment key={student._id}>
+              <tr>
+                <td>{student.firstName}</td>
+                <td>{student.lastName}</td>
+                <td>{student.middleName}</td>
+                <td>{student.phone}</td>
+                <td>
+                  {student.courses.length > 0 &&
+                    new Date(student.courses[student.courses.length - 1].startDate)
+                      .toISOString()
+                      .split('T')[0]}
+                </td>
+                <td>
+                  {student.courses.length > 0 &&
+                    new Date(student.courses[student.courses.length - 1].endDate)
+                      .toISOString()
+                      .split('T')[0]}
+                </td>
+                <td className="d-flex">
                   <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                    className="btn btn-secondary"
+                    onClick={() => showAdditionalInfo(student._id)}
                   >
-                    Action
+                    Подробнее
                   </button>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Додати курс
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Оновити дінні
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item " href="#">
-                        Видалити
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Action
+                    </button>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          Додати курс
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          Оновити дінні
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item " href="#">
+                          Видалити
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              {selectedStudent === student._id && (
+                <tr>
+                  <td colSpan="7">
+                    {/* Здесь вы можете разместить дополнительную информацию */}
+                    Дополнительная информация о студенте с ID: {student._id}
+                    <button className="btn btn-link" onClick={hideAdditionalInfo}>
+                      Скрыть
+                    </button>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
         </tbody>
       </table>
