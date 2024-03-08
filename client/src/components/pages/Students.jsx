@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Students = () => {
@@ -64,6 +65,11 @@ const Students = () => {
                     Action
                   </button>
                   <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to={`/students/${student._id}`}>
+                        Детально
+                      </Link>
+                    </li>
                     <li>
                       <a className="dropdown-item" href="#">
                         Додати курс
