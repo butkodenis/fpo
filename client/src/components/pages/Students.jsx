@@ -21,8 +21,11 @@ const Students = () => {
 
   return (
     <div className="d-flex flex-column">
-      <h1>Students</h1>
-      <table className="table">
+      <h4>Students</h4>
+      <Link to="/students/add" className="btn btn-primary btn-sm">
+        Add Student
+      </Link>
+      <table className="table-sm table border ">
         <thead>
           <tr>
             <th>First Name</th>
@@ -57,7 +60,7 @@ const Students = () => {
               <td>
                 <div className="dropdown">
                   <button
-                    className="btn btn-secondary dropdown-toggle"
+                    className="btn btn-secondary dropdown-toggle btn-sm"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"

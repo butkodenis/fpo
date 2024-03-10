@@ -8,6 +8,7 @@ import Users from './components/pages/Users';
 import Login from './components/pages/Login';
 import Students from './components/pages/Students';
 import StudentCard from './components/card/StudentCard';
+import StudentAdd from './components/forms/StudentAdd';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/students" element={<Students />} />
             <Route path="/students/:id" element={<StudentCard />} />
+            <Route path="/students/add" element={<StudentAdd />} />
           </Route>
           <Route path="/login2" element={<Login />} />
         </Routes>
