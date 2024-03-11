@@ -24,7 +24,7 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { firstName, lastName, middleName, phone } = req.body;
+    const { firstName, lastName, middleName, phone, ur } = req.body;
 
     // перевірка чи студент вже існує
     const existingStudent = await Student.findOne({ firstName, lastName, middleName });
@@ -33,7 +33,7 @@ const createStudent = async (req, res) => {
       return res.status(400).json({ message: 'Студент вже існує' });
     }
 
-    const student = new Student({ firstName, lastName, middleName, phone });
+    const student = new Student({ firstName, lastName, middleName, phone, ur });
     await student.save();
     return res.status(201).json({ message: `Студента створено успішно` });
   } catch (error) {
@@ -44,13 +44,13 @@ const createStudent = async (req, res) => {
 const addCourseToStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseId, startDate, endDate } = req.body;
+    const { courseId, startDate, endDate, chair } = req.body;
 
     const student = await Student.findById(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    student.courses.push({ course: courseId, startDate, endDate });
+    student.courses.push({ course: courseId, startDate, endDate, chair });
     await student.save();
     return res.status(200).json({ message: 'Курс додано до студента успішно' });
   } catch (error) {
