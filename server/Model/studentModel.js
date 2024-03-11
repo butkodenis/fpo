@@ -13,6 +13,7 @@ const studentSchema = new mongoose.Schema({
       startDate: { type: Date },
       endDate: { type: Date },
       chair: { type: String },
+      status: { type: Boolean },
     },
   ],
 

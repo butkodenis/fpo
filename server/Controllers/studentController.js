@@ -44,13 +44,13 @@ const createStudent = async (req, res) => {
 const addCourseToStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseId, startDate, endDate, chair } = req.body;
+    const { courseId, startDate, endDate, chair, status } = req.body;
 
     const student = await Student.findById(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    student.courses.push({ course: courseId, startDate, endDate, chair });
+    student.courses.push({ course: courseId, startDate, endDate, chair, status });
     await student.save();
     return res.status(200).json({ message: 'Курс додано до студента успішно' });
   } catch (error) {
