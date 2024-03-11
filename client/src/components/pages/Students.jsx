@@ -15,6 +15,16 @@ const Students = () => {
     }
   };
 
+  const deleteStudent = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/student/${id}/delete`);
+      console.log(id);
+      fetchStudents();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchStudents();
   }, []);
@@ -28,9 +38,9 @@ const Students = () => {
       <table className="table-sm table border ">
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Middle Name</th>
+            <th>Призвище</th>
+            <th>Ім'я</th>
+            <th>По-батькові</th>
             <th>Phone</th>
             <th>Старт курсів</th>
             <th>Кінець курсів</th>
@@ -40,8 +50,8 @@ const Students = () => {
         <tbody>
           {students.map((student) => (
             <tr key={student._id}>
-              <td>{student.firstName}</td>
               <td>{student.lastName}</td>
+              <td>{student.firstName}</td>
               <td>{student.middleName}</td>
               <td>{student.phone}</td>
               <td>
@@ -84,9 +94,13 @@ const Students = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item " href="#">
+                      <button
+                        class="dropdown-item"
+                        type="button"
+                        onClick={() => deleteStudent(student._id)}
+                      >
                         Видалити
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>

@@ -61,7 +61,7 @@ const StudentCard = () => {
               </div>
 
               <Link to="/students" className="btn btn-primary">
-                Go Back
+                Повернутися
               </Link>
             </>
           )}

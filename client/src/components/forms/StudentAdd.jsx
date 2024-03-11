@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 const StudentAdd = () => {
   const {
@@ -8,14 +9,20 @@ const StudentAdd = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-  });
+    try {
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/student/create`, data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="container">
         <h3>Додати студента</h3>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-3">
             <label htmlFor="lastName">Призвище</label>
             <input
