@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const StudentAdd = () => {
