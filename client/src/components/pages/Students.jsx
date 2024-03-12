@@ -70,7 +70,7 @@ const Students = () => {
               <td>
                 <div className="dropdown">
                   <button
-                    className="btn btn-secondary dropdown-toggle btn-sm"
+                    className="btn btn-info dropdown-toggle btn-sm"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -94,8 +94,11 @@ const Students = () => {
                       </a>
                     </li>
                     <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
                       <button
-                        class="dropdown-item"
+                        className="dropdown-item btn btn-danger "
                         type="button"
                         onClick={() => deleteStudent(student._id)}
                       >
