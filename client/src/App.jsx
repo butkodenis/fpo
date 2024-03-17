@@ -9,7 +9,7 @@ import Login from './components/pages/Login';
 import Students from './components/pages/Students';
 import StudentCard from './components/card/StudentCard';
 import StudentAdd from './components/forms/StudentAdd';
-import StudentAddCourse from './components/forms/StudentAddCourse';
+import StudentAddContract from './components/forms/StudentAddContract';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
             <Route path="/students" element={<Students />} />
             <Route path="/students/:id" element={<StudentCard />} />
             <Route path="/students/add" element={<StudentAdd />} />
-            <Route path="/students/:id/addCourse" element={<StudentAddCourse />} />
+            <Route path="/students/:id/addContract" element={<StudentAddContract />} />
           </Route>
           <Route path="/login2" element={<Login />} />
         </Routes>

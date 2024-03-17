@@ -42,8 +42,7 @@ const Students = () => {
             <th>Ім'я</th>
             <th>По-батькові</th>
             <th>Phone</th>
-            <th>Старт курсів</th>
-            <th>Кінець курсів</th>
+
             <th>Action</th>
           </tr>
         </thead>
@@ -54,18 +53,6 @@ const Students = () => {
               <td>{student.firstName}</td>
               <td>{student.middleName}</td>
               <td>{student.phone}</td>
-              <td>
-                {student.courses.length > 0 &&
-                  new Date(student.courses[student.courses.length - 1].startDate)
-                    .toISOString()
-                    .split('T')[0]}
-              </td>
-              <td>
-                {student.courses.length > 0 &&
-                  new Date(student.courses[student.courses.length - 1].endDate)
-                    .toISOString()
-                    .split('T')[0]}
-              </td>
 
               <td>
                 <div className="dropdown">
@@ -84,8 +71,8 @@ const Students = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to={`/students/${student._id}/addCourse`}>
-                        Додати курс
+                      <Link className="dropdown-item" to={`/students/${student._id}/addContract`}>
+                        Додати договір
                       </Link>
                     </li>
                     <li>

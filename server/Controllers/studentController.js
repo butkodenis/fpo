@@ -12,7 +12,7 @@ const getAllStudents = async (req, res) => {
 const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await Student.findById(id).populate('courses.course');
+    const student = await Student.findById(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
