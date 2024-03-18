@@ -66,10 +66,7 @@ const StudentAdd = () => {
               <label htmlFor="phone">Телефон</label>
               <input type="text" className="form-control" id="phone" {...register('phone')} />
             </div>
-            <div className="form-group mb-3">
-              <label htmlFor="ur">Юр. особа</label>
-              <input type="text" className="form-control" id="ur" {...register('ur')} />
-            </div>
+
             <button type="submit" className="btn btn-primary">
               Додати
             </button>

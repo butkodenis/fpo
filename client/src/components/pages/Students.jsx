@@ -35,14 +35,14 @@ const Students = () => {
       <Link to="/students/add" className="btn btn-primary btn-sm">
         Add Student
       </Link>
-      <table className="table-sm table border ">
+      <table className="table-sm  table border ">
         <thead>
           <tr>
             <th>Призвище</th>
             <th>Ім'я</th>
             <th>По-батькові</th>
             <th>Phone</th>
-
+            <th>Паспорт</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -53,7 +53,7 @@ const Students = () => {
               <td>{student.firstName}</td>
               <td>{student.middleName}</td>
               <td>{student.phone}</td>
-
+              <td> </td>
               <td>
                 <div className="dropdown">
                   <button

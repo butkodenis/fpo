@@ -18,7 +18,21 @@ const StudentAddContract = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    const sendData = {
+      ...data,
+      studentId: id,
+    };
+    console.log(sendData);
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/student/${id}/addContract`,
+        sendData,
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -57,7 +71,7 @@ const StudentAddContract = () => {
             </div>
           </div>
           <div className="form-group mb-3">
-            <label htmlFor="chair">Замовник</label>
+            <label htmlFor="urFullName">Юр. особа</label>
             <input
               type="text"
               className="form-control"
@@ -66,32 +80,42 @@ const StudentAddContract = () => {
             />
           </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="ur">Юридична особа</label>
-            <select className="form-control" id="ur" {...register('ur')}>
-              <option value="">введите юр.особу</option>
-              <option value="1">Виберіть курс</option>
-              <option value="2">Виберіть курс</option>
-              <option value="3">Виберіть курс</option>
-            </select>
-          </div>
           <div className="row">
-            <div className="form-group col-6 mb-3">
+            <div className="form-group col-3 mb-3">
               <label htmlFor="num">Номер договору</label>
               <input type="text" className="form-control" id="num" {...register('num')} />
             </div>
-            <div className="form-group col-6 mb-3 ">
+            <div className="form-group col-3 mb-3 ">
               <label htmlFor="numDate">Від</label>
               <input type="date" className="form-control" id="numDate" {...register('numDate')} />
             </div>
+            <div className="form-group col-3 mb-3">
+              <label htmlFor="part">Частинами</label>
+              <input
+                type="number"
+                className="form-control"
+                id="sum"
+                min="1"
+                max="8"
+                defaultValue="1"
+                {...register('part')}
+              />
+            </div>
+
+            <div className="form-group col-3 mb-3 ">
+              <label htmlFor="payDate">Дата оплати</label>
+              <input type="date" className="form-control" id="payDate" {...register('payDate')} />
+            </div>
           </div>
 
-          <button type="submit" className="btn btn-primary ">
-            Додати
-          </button>
-          <Link to="/students" className="btn btn-primary ">
-            Повернутися
-          </Link>
+          <div className="d-flex justify-content-between">
+            <button type="submit" className="btn btn-info ">
+              Додати
+            </button>
+            <Link to="/students" className="btn btn-info ">
+              Повернутися
+            </Link>
+          </div>
         </form>
       </div>
     </>

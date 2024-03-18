@@ -4,12 +4,12 @@ const contractSchema = new mongoose.Schema({
   student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
   course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
   num: { type: Number },
-  ur: { type: String },
+  numDate: { type: Date },
   urFullName: { type: String },
   startDate: { type: Date },
   endDate: { type: Date },
-  chair: { type: String },
-  status: { type: Boolean },
+  part: { type: Number },
+  payDate: { type: Date },
   createdAt: { type: Date, default: Date.now },
 });
 

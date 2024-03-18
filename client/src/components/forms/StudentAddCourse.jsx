@@ -19,7 +19,10 @@ const StudentAddCourse = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-
+    const sendData = {
+      ...data,
+      
+    }
     try {
       await axios.post(`${import.meta.env.VITE_BASE_URL}/api/student/${id}/addCourse`, data);
     } catch (error) {
