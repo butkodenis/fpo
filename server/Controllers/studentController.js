@@ -1,4 +1,5 @@
 const Student = require('../Model/studentModel');
+const Contract = require('../Model/contractModel');
 
 const getAllStudents = async (req, res) => {
   try {
@@ -13,10 +14,17 @@ const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
     const student = await Student.findById(id);
+    const contracts = await Contract.find({ student: id }).populate('course');
+    console.log(contracts);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    return res.status(200).json(student);
+    // Создаем объект, содержащий данные студента и контракты
+    const data = {
+      student: student,
+      contracts: contracts,
+    };
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
