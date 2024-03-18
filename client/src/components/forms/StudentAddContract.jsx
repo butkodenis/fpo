@@ -18,16 +18,10 @@ const StudentAddContract = () => {
   };
 
   const onSubmit = async (data) => {
-    const sendData = {
-      ...data,
-      studentId: id,
-    };
-    console.log(sendData);
-
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/student/${id}/addContract`,
-        sendData,
+        data,
       );
       console.log(res.data);
     } catch (error) {
