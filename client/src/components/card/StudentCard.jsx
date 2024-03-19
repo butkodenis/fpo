@@ -44,6 +44,10 @@ const StudentCard = () => {
     console.log(data); // Добавлено для отладки
   };
 
+  const handleEdit = (index) => {
+    setActiveFormIndex(index);
+  };
+
   useEffect(() => {
     fetchStudent();
   }, []);
@@ -83,7 +87,7 @@ const StudentCard = () => {
                   type="date"
                   className="form-control"
                   id={`startDate[${index}]`}
-                  disabled
+                  disabled={activeFormIndex !== index}
                   {...register(`startDate[${index}]`)}
                 />
               </div>
@@ -93,7 +97,7 @@ const StudentCard = () => {
                   type="date"
                   className="form-control"
                   id={`endDate[${index}]`}
-                  disabled
+                  disabled={activeFormIndex !== index}
                   {...register(`endDate[${index}]`)}
                 />
               </div>
@@ -104,16 +108,18 @@ const StudentCard = () => {
                 type="text"
                 className="form-control"
                 id={`urFullName[${index}]`}
-                disabled
+                disabled={activeFormIndex !== index}
                 {...register(`urFullName[${index}]`)}
               />
             </div>
-            <button type="button" className="btn btn-primary ">
-              Редагувати
+            <button type="button" className="btn btn-primary " onClick={() => handleEdit(index)}>
+              <i className="bi bi-pencil-fill"></i>
             </button>
-            <button type="submit" className="btn btn-primary">
-              Надіслати
-            </button>
+            {activeFormIndex == index && (
+              <button type="submit" className="btn btn-primary">
+                Надіслати
+              </button>
+            )}
           </form>
         ))}
       </div>
