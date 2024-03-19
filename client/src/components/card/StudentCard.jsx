@@ -9,10 +9,13 @@ const StudentCard = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeFormIndex, setActiveFormIndex] = useState(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const fetchStudent = async () => {
@@ -23,11 +26,22 @@ const StudentCard = () => {
       setContracts(response.data.contracts);
       setLoading(false);
       console.log(response.data); // Добавлено для отладки
+
+      // Устанавливаем значения по умолчанию для каждого контракта
+      response.data.contracts.forEach((contract, index) => {
+        setValue(`startDate[${index}]`, contract.startDate.split('T')[0]);
+        setValue(`endDate[${index}]`, contract.endDate.split('T')[0]);
+        setValue(`urFullName[${index}]`, contract.urFullName);
+      });
     } catch (error) {
       setError(error);
       setLoading(false);
       console.error(error); // Добавлено для отладки
     }
+  };
+
+  const onSubmit = async (data) => {
+    console.log(data); // Добавлено для отладки
   };
 
   useEffect(() => {
@@ -59,31 +73,50 @@ const StudentCard = () => {
           )}
         </div>
       </div>
-      <form>
-        <div className="row">
-          <div className="form-group col-6 mb-3">
-            <label htmlFor="startDate">Дата початку</label>
-            <input type="date" className="form-control" id="startDate" disabled />
-          </div>
-          <div className="form-group col-6 mb-3 ">
-            <label htmlFor="endDate">Дата закінчення</label>
-            <input type="date" className="form-control" id="endDate" disabled />
-          </div>
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="urFullName">Юр. особа</label>
-          <input
-            type="text"
-            className="form-control"
-            id="urFullName"
-            disabled
-            {...register('urFullName')}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary ">
-          Змінити
-        </button>
-      </form>
+      <div className="row">
+        {contracts.map((contract, index) => (
+          <form key={index} onSubmit={handleSubmit(onSubmit)}>
+            <div className="row">
+              <div className="form-group col-6 mb-3">
+                <label htmlFor={`startDate[${index}]`}>Дата початку</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id={`startDate[${index}]`}
+                  disabled
+                  {...register(`startDate[${index}]`)}
+                />
+              </div>
+              <div className="form-group col-6 mb-3 ">
+                <label htmlFor={`endDate[${index}]`}>Дата закінчення</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id={`endDate[${index}]`}
+                  disabled
+                  {...register(`endDate[${index}]`)}
+                />
+              </div>
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor={`urFullName[${index}]`}>Юр. особа</label>
+              <input
+                type="text"
+                className="form-control"
+                id={`urFullName[${index}]`}
+                disabled
+                {...register(`urFullName[${index}]`)}
+              />
+            </div>
+            <button type="button" className="btn btn-primary ">
+              Редагувати
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Надіслати
+            </button>
+          </form>
+        ))}
+      </div>
     </div>
   );
 };
