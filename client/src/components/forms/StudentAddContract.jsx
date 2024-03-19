@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 const StudentAddContract = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [courses, setCourses] = useState([]);
   const { register, handleSubmit } = useForm();
@@ -24,6 +25,9 @@ const StudentAddContract = () => {
         data,
       );
       console.log(res.data);
+      setTimeout(() => {
+        navigate('/students');
+      }, 1200);
     } catch (error) {
       console.error(error);
     }
