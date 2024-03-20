@@ -12,7 +12,7 @@ const FormContract = ({ contract }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    setActiveForm(!activeForm);
+    setActiveForm(false); // После отправки формы устанавливаем activeForm в false
   };
 
   return (
@@ -43,13 +43,15 @@ const FormContract = ({ contract }) => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setActiveForm(!activeForm)}
+          onClick={() => setActiveForm(true)} // Устанавливаем activeForm в true при нажатии на кнопку изменения
         >
           <i className="bi bi-pencil-fill"></i>
         </button>
-        <button type="submit" className="btn btn-primary">
-          <i className="bi bi-floppy"></i>
-        </button>
+        {activeForm && (
+          <button type="submit" className="btn btn-primary">
+            <i className="bi bi-floppy"></i>
+          </button>
+        )}
       </form>
     </div>
   );
