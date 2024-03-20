@@ -61,7 +61,6 @@ const StudentCard = () => {
           )}
         </div>
       </div>
-      FormContract
     </div>
   );
 };

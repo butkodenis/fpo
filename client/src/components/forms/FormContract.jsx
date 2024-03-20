@@ -19,6 +19,28 @@ const FormContract = ({ contract }) => {
     <div className="mb-3">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
+          <div className="form-group col-4">
+            <label htmlFor="num">№ договору</label>
+            <input
+              type="number"
+              className="form-control"
+              id="num"
+              defaultValue={contract.num}
+              disabled
+            />
+          </div>
+          <div className="form-group col-4">
+            <label htmlFor="numDate">Дата укладення</label>
+            <input
+              type="date"
+              className="form-control"
+              id="numDate"
+              defaultValue={contract.numDate.split('T')[0]}
+              disabled
+            />
+          </div>
+        </div>
+        <div className="row">
           <div className="form-group col-6">
             <label htmlFor="startDate">Дата початку</label>
             <input
