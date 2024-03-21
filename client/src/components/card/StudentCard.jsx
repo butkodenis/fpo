@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import axios from 'axios';
+
 import FormContract from '../forms/FormContract';
 
 const StudentCard = () => {
@@ -10,8 +10,6 @@ const StudentCard = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const { register, handleSubmit } = useForm();
 
   const fetchStudent = async () => {
     try {
@@ -51,7 +49,7 @@ const StudentCard = () => {
               <p className="card-text">Курси :</p>
               <hr />
               {contracts.map((contract, index) => (
-                <FormContract key={index} contract={contract} />
+                <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
               ))}
 
               <Link to="/students" className="btn btn-primary">
