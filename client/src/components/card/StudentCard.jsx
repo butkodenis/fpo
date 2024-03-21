@@ -44,7 +44,7 @@ const StudentCard = () => {
             <>
               <p className="card-text">
                 <mark>
-                  {student.firstName} {student.lastName} {student.middleName}
+                  {student.lastName} {student.firstName} {student.middleName}
                 </mark>
               </p>
               <p className="card-text">тел.: {student.phone}</p>
