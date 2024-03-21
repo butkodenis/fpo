@@ -4,12 +4,12 @@ import Sidebar from './Sidebar';
 
 const Layout = () => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid ">
       <div className=" d-flex vh-100">
         {/* Боковая панель */}
         <Sidebar />
         {/* Основное содержимое */}
-        <div className="flex-grow-1  overflow-auto">
+        <div className="flex-grow-1  mt-2 overflow-auto">
           <Outlet />
         </div>
       </div>

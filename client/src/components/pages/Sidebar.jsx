@@ -7,18 +7,33 @@ const Sidebar = () => {
         <h3 className="text-center">Меню</h3>
         <div className="container">
           <ul className="list-unstyled">
-            <li className="mb-2">
-              <Link to="/" className="btn btn-primary btn-block text-left">
-                Головна
-              </Link>
+            <li className="mb-3">
+              <button
+                className="btn btn-dark mb-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                Рахунки
+              </button>
+              <div className="collapse " id="collapseExample">
+                <Link to="/" className="btn btn-outline-secondary mb-1">
+                  Особові рахунки
+                </Link>
+                <Link to="/" className="btn btn-outline-secondary ">
+                  Платежі
+                </Link>
+              </div>
             </li>
-            <li className="mb-2">
-              <Link to="/students" className="btn btn-primary btn-block text-left">
+            <li className="mb-3">
+              <Link to="/students" className="btn btn-dark btn-block text-left ">
                 Студенти
               </Link>
             </li>
-            <li className="mb-2">
-              <Link to="/users" className="btn btn-success btn-block text-left">
+            <li className="mb-3">
+              <Link to="/users" className="btn btn-dark btn-block text-left">
                 Користувачі
               </Link>
             </li>
@@ -29,11 +44,6 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-      </div>
-      <div className=" text-center">
-        <h3>Контакты</h3>
-        <p>Телефон: 8-800-555-35-35</p>
-        <p>Email:</p>
       </div>
     </nav>
   );
