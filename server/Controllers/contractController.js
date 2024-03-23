@@ -1,4 +1,5 @@
 const Contract = require('../Model/contractModel');
+const StudentsBalance = require('../Model/studentsBalanceModel');
 
 const createContract = async (req, res) => {
   try {
@@ -20,6 +21,18 @@ const createContract = async (req, res) => {
     });
     await contract.save();
 
+    const currentDate = new Date();
+    const period = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+
+    const studentBalance = new StudentsBalance({
+      student: id,
+      balanceStart: 0,
+      balanceEnd: 0,
+      period: period,
+    });
+
+    await studentBalance.save();
+
     return res.status(200).json({ message: 'Контракт створено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -40,6 +53,7 @@ const updateContract = async (req, res) => {
       numOrder,
     };
     await Contract.findByIdAndUpdate(id, contract);
+
     return res.status(200).json({ message: 'Контракт оновлено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
