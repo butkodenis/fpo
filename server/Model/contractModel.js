@@ -10,6 +10,7 @@ const contractSchema = new mongoose.Schema({
   endDate: { type: Date },
   part: { type: Number },
   payDate: { type: Date },
+  numOrder: { type: Number },
   createdAt: { type: Date, default: Date.now },
 });
 

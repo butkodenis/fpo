@@ -11,6 +11,7 @@ const FormContract = ({ contract, fetchStudent }) => {
 
       payDate: contract.payDate.split('T')[0],
       part: contract.part,
+      numOrder: contract.numOrder,
     },
   });
 
@@ -92,7 +93,7 @@ const FormContract = ({ contract, fetchStudent }) => {
               disabled
             />
           </div>
-          <div className="form-group col-4">
+          <div className="form-group col-3">
             <label htmlFor="payDate">Дата оплати</label>
             <input
               type="date"
@@ -113,6 +114,17 @@ const FormContract = ({ contract, fetchStudent }) => {
               min={1}
               max={6}
               {...register('part')}
+            />
+          </div>
+          <div className="form-group col-3">
+            <label htmlFor="numOrder">Номер наказу</label>
+            <input
+              type="number"
+              className="form-control"
+              id="numOrder"
+              min={1}
+              disabled={!activeForm}
+              {...register('numOrder')}
             />
           </div>
         </div>
