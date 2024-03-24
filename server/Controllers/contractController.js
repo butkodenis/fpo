@@ -1,5 +1,6 @@
 const Contract = require('../Model/contractModel');
 const StudentsBalance = require('../Model/studentsBalanceModel');
+const Course = require('../Model/courseModel');
 
 const createContract = async (req, res) => {
   try {
@@ -19,14 +20,17 @@ const createContract = async (req, res) => {
       num,
       numDate,
     });
-    await contract.save();
+    const saveContract = await contract.save();
 
     const currentDate = new Date();
     const period = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+    const { price } = await Course.findById(courseId);
 
     const studentBalance = new StudentsBalance({
       student: id,
+      contract: saveContract.id,
       balanceStart: 0,
+      accrued: -price,
       balanceEnd: 0,
       period: period,
     });
@@ -52,10 +56,7 @@ const updateContract = async (req, res) => {
       price,
       numOrder,
     };
-    const saveContract = await Contract.findByIdAndUpdate(id, contract, { new: true });
-    console.log(saveContract.student, price); /*   */
-
-    await StudentsBalance.findOneAndUpdate({ student: saveContract.student }, { accrued: price });
+    await Contract.findByIdAndUpdate(id, contract);
 
     return res.status(200).json({ message: 'Контракт оновлено успішно' });
   } catch (error) {
@@ -72,7 +73,12 @@ const deleteContract = async (req, res) => {
       return res.status(400).json({ message: 'Контракт не знайдено' });
     }
 
+    // Удаление всех строк баланса с данным идентификатором контракта
+    await StudentsBalance.deleteMany({ contract: id });
+
+    // Затем удаляем сам контракт
     await Contract.findByIdAndDelete(id);
+
     return res.status(200).json({ message: 'Контракт видалено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
