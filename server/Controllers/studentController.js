@@ -15,7 +15,7 @@ const getStudent = async (req, res) => {
     const { id } = req.params;
     const student = await Student.findById(id);
     const contracts = await Contract.find({ student: id }).populate('course');
-    console.log(contracts);
+    // console.log(contracts);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }

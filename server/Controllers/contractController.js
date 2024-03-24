@@ -43,7 +43,7 @@ const updateContract = async (req, res) => {
   try {
     const { id } = req.params;
     const { startDate, endDate, part, payDate, price, numOrder } = req.body;
-    console.log(req.body);
+    console.log(req.body); /*   */
     const contract = {
       startDate,
       endDate,
@@ -52,7 +52,10 @@ const updateContract = async (req, res) => {
       price,
       numOrder,
     };
-    await Contract.findByIdAndUpdate(id, contract);
+    const saveContract = await Contract.findByIdAndUpdate(id, contract, { new: true });
+    console.log(saveContract.student, price); /*   */
+
+    await StudentsBalance.findOneAndUpdate({ student: saveContract.student }, { accrued: price });
 
     return res.status(200).json({ message: 'Контракт оновлено успішно' });
   } catch (error) {
