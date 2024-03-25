@@ -9,7 +9,7 @@ const Students = () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/getAll`);
       setStudents(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -18,7 +18,7 @@ const Students = () => {
   const deleteStudent = async (id) => {
     try {
       await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/student/${id}/delete`);
-      console.log(id);
+      // console.log(id);
       fetchStudents();
     } catch (error) {
       console.error(error);
@@ -75,17 +75,13 @@ const Students = () => {
                         Додати договір
                       </Link>
                     </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Оновити дінні
-                      </a>
-                    </li>
+
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
                       <button
-                        className="dropdown-item btn btn-danger "
+                        className="dropdown-item btn btn-danger  text-danger"
                         type="button"
                         onClick={() => deleteStudent(student._id)}
                       >

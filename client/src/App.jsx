@@ -10,6 +10,8 @@ import Students from './components/pages/Students';
 import StudentCard from './components/card/StudentCard';
 import StudentAdd from './components/forms/StudentAdd';
 import StudentAddContract from './components/forms/StudentAddContract';
+import StudentsBalance from './components/pages/StudentsBalance';
+import Course from './components/pages/Course';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="/students/:id" element={<StudentCard />} />
             <Route path="/students/add" element={<StudentAdd />} />
             <Route path="/students/:id/addContract" element={<StudentAddContract />} />
+            <Route path="/studentsBalance" element={<StudentsBalance />} />
+            <Route path="/courses" element={<Course />} />
           </Route>
           <Route path="/login2" element={<Login />} />
         </Routes>

@@ -19,10 +19,13 @@ const Sidebar = () => {
                 Рахунки
               </button>
               <div className="collapse " id="collapseExample">
-                <Link to="/" className="btn btn-outline-secondary mb-1">
+                <Link
+                  to="/studentsBalance"
+                  className="btn  btn-sm  btn-outline-secondary w-75 mb-1"
+                >
                   Особові рахунки
                 </Link>
-                <Link to="/" className="btn btn-outline-secondary ">
+                <Link to="/" className="btn  btn-sm btn-outline-secondary w-75 ">
                   Платежі
                 </Link>
               </div>
@@ -32,6 +35,12 @@ const Sidebar = () => {
                 Студенти
               </Link>
             </li>
+            <li className="mb-3">
+              <Link to="/courses" className="btn btn-dark btn-block text-left">
+                Курси
+              </Link>
+            </li>
+
             <li className="mb-3">
               <Link to="/users" className="btn btn-dark btn-block text-left">
                 Користувачі
