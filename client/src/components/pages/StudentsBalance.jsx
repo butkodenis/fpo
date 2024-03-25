@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTable } from 'react-table';
-import StudentsBalanseTable from '../teable/StudentsBalanseTable';
+
+import StudentsBalanceTable from '../teable/StudentsBalanceTable';
 
 const StudentsBalance = () => {
   return (
     <div>
       <h3> оборотно-сальдовая ведомость</h3>
-      <StudentsBalanseTable />
+      <StudentsBalanceTable />
     </div>
   );
 };

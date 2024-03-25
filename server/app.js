@@ -29,6 +29,7 @@ app.use('/api', userRoute);
 app.use('/api', studentRoute);
 app.use('/api', require('./Routes/courseRoute'));
 app.use('/api', require('./Routes/contractRoute'));
+app.use('/api', require('./Routes/studentsBalanceRoute'));
 
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);
