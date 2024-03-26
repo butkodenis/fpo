@@ -27,7 +27,7 @@ const StudentAddContract = () => {
       console.log(res.data);
       setTimeout(() => {
         navigate('/students');
-      }, 1200);
+      }, 500);
     } catch (error) {
       console.error(error);
     }
