@@ -1,9 +1,8 @@
 const StudentsBalance = require('../Model/studentsBalanceModel');
-const Contract = require('../Model/contractModel');
 
 const getAllStudentsBalance = async (req, res) => {
   try {
-    const studentsBalance = await StudentsBalance.find();
+    const studentsBalance = await StudentsBalance.find().populate('student');
     console.log(studentsBalance);
     res.status(200).json(studentsBalance);
   } catch (error) {
