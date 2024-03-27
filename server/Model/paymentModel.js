@@ -5,6 +5,7 @@ const paymentSchema = new mongoose.Schema({
   payDate: { type: Date },
   amount: { type: Number },
   numberPayment: { type: Number },
+  period: { type: Date },
   createdAt: { type: Date, default: Date.now },
 });
 
