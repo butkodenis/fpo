@@ -85,10 +85,18 @@ const updateStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const contracts = await Contract.find({ student: id });
+    console.log('кол-во контр', contracts.length);
+    if (contracts.length > 0) {
+      return res.json({ message: 'Студента видалити не можливо' });
+    }
+
     const student = await Student.findByIdAndDelete(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
+
     return res.status(200).json({ message: 'Студента видалено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });

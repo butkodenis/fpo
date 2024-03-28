@@ -17,8 +17,10 @@ const Students = () => {
 
   const deleteStudent = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/student/${id}/delete`);
-      // console.log(id);
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/api/student/${id}/delete`,
+      );
+      console.log(response.data);
       fetchStudents();
     } catch (error) {
       console.error(error);
