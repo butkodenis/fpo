@@ -7,7 +7,6 @@ const studentsBalanceSchema = new mongoose.Schema({
   balanceStart: { type: Number },
   balanceEnd: { type: Number },
   payment: { type: Number, default: 0 },
-  period: { type: Date },
   year: { type: Number },
   month: { type: Number },
   createdAt: { type: Date, default: Date.now },

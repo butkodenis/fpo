@@ -23,7 +23,7 @@ const getStudentPayments = async (req, res) => {
 const createPayment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { payDate, amount, numberPayment, year, mouth } = req.body;
+    const { payDate, amount, numberPayment } = req.body;
 
     console.log(req.body);
 
@@ -32,8 +32,6 @@ const createPayment = async (req, res) => {
       amount,
       payDate,
       numberPayment,
-      year,
-      mouth,
     });
     await newPayment.save();
 
@@ -45,14 +43,14 @@ const createPayment = async (req, res) => {
     if (!studentBalance) {
       res.status(404).json({ message: 'Баланс студента не знайдено' });
     }
+    console.log(studentBalance);
 
-    /*
     studentBalance.payment += amount;
     studentBalance.balanceEnd =
       studentBalance.balanceStart + studentBalance.accrued + studentBalance.payment;
 
     await studentBalance.save();
-    */
+
     res.status(201).json({ message: 'Платіж додано' });
   } catch (error) {
     res.status(500).json({ message: error.message });
