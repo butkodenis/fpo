@@ -6,6 +6,8 @@ const paymentSchema = new mongoose.Schema({
   amount: { type: Number },
   numberPayment: { type: Number },
   period: { type: Date },
+  year: { type: Number, default: new Date().getFullYear() },
+  month: { type: Number, default: new Date().getMonth() + 1 },
   createdAt: { type: Date, default: Date.now },
 });
 

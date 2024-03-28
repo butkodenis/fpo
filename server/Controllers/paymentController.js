@@ -1,4 +1,5 @@
 const Payment = require('../Model/paymentModel');
+const StudentsBalance = require('../Model/studentsBalanceModel');
 
 const getPayments = async (req, res) => {
   try {
@@ -22,16 +23,36 @@ const getStudentPayments = async (req, res) => {
 const createPayment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { payDate, amount, numberPayment, period } = req.body;
+    const { payDate, amount, numberPayment, year, mouth } = req.body;
+
+    console.log(req.body);
+
     const newPayment = new Payment({
       student: id,
-      payDate,
       amount,
+      payDate,
       numberPayment,
-      period,
+      year,
+      mouth,
     });
     await newPayment.save();
 
+    // оновлюємо баланс студента
+    const studentBalance = await StudentsBalance.findOne({
+      student: id,
+    });
+
+    if (!studentBalance) {
+      res.status(404).json({ message: 'Баланс студента не знайдено' });
+    }
+
+    /*
+    studentBalance.payment += amount;
+    studentBalance.balanceEnd =
+      studentBalance.balanceStart + studentBalance.accrued + studentBalance.payment;
+
+    await studentBalance.save();
+    */
     res.status(201).json({ message: 'Платіж додано' });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -30,17 +30,8 @@ const StudentsBalanceTable = () => {
       { Header: 'нараховано', accessor: 'accrued' },
       { Header: 'сплачено', accessor: 'payment' },
       { Header: 'на кінець', accessor: 'balanceEnd' },
-      {
-        Header: 'період',
-        accessor: 'period',
-        // Функция для отображения месяца и года в ячейке "период"
-        Cell: ({ value }) => {
-          const date = new Date(value);
-          const month = date.toLocaleString('default', { month: 'long' });
-          const year = date.getFullYear();
-          return `${month} ${year}`;
-        },
-      },
+      { Header: 'рік', accessor: 'year' },
+      { Header: 'місяць', accessor: 'month' },
     ],
     [],
   );

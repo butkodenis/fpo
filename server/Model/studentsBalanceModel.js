@@ -8,6 +8,9 @@ const studentsBalanceSchema = new mongoose.Schema({
   balanceEnd: { type: Number },
   payment: { type: Number, default: 0 },
   period: { type: Date },
+  year: { type: Number },
+  month: { type: Number },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('StudentsBalance', studentsBalanceSchema);

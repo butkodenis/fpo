@@ -22,10 +22,8 @@ const createContract = async (req, res) => {
     });
     const saveContract = await contract.save();
 
-    const currentDate = new Date();
-
     // Создаем строку баланса для студента
-    const period = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+
     const { price } = await Course.findById(courseId);
 
     const studentBalance = new StudentsBalance({
@@ -34,7 +32,8 @@ const createContract = async (req, res) => {
       balanceStart: 0,
       accrued: -price,
       balanceEnd: -price,
-      period: period,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
     });
 
     await studentBalance.save();
