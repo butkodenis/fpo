@@ -38,6 +38,8 @@ const createPayment = async (req, res) => {
     // оновлюємо баланс студента
     const studentBalance = await StudentsBalance.findOne({
       student: id,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
     });
 
     if (!studentBalance) {
