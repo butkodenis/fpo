@@ -42,7 +42,7 @@ const StudentsBalanceTable = () => {
   });
 
   return (
-    <div className="conteiner bg-info rounded border border-2  p-2 ">
+    <div className="table-sm  table-striped table ">
       <table className=" table-striped  table " {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (

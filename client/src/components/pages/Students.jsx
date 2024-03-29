@@ -37,7 +37,7 @@ const Students = () => {
       <Link to="/students/add" className="btn btn-primary btn-sm">
         Add Student
       </Link>
-      <table className="table-sm  table border ">
+      <table className="table-sm  table-striped table border ">
         <thead>
           <tr>
             <th>Призвище</th>
