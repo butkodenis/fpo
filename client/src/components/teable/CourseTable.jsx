@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 import axios from 'axios';
+import { formatDate } from '../util';
 
 const CourseTable = () => {
   const [courseData, setCourseData] = useState([]);
@@ -8,7 +9,7 @@ const CourseTable = () => {
   const fetchCourse = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/course/getAll`);
-      console.log(res.data);
+
       setCourseData(res.data);
     } catch (error) {
       console.error(error);
@@ -44,6 +45,7 @@ const CourseTable = () => {
       {
         Header: 'Дата наказу',
         accessor: 'orderDate',
+        Cell: ({ value }) => formatDate(value),
       },
     ],
     [],
@@ -55,26 +57,27 @@ const CourseTable = () => {
   });
 
   return (
-    <table className="table-striped table-hover table">
+    <table className="table-striped table-hover table" {...getTableProps()}>
       <thead>
-        <tr>
-          <th scope="col">Назва курсу</th>
-          <th scope="col">Вчитель</th>
-          <th scope="col">Дата початку</th>
-          <th scope="col">Дата закінчення</th>
-          <th scope="col">Кількість учнів</th>
-          <th scope="col">Вартість</th>
-        </tr>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
+        ))}
       </thead>
-      <tbody>
-        <tr>
-          <td>Назва курсу</td>
-          <td>Вчитель</td>
-          <td>Дата початку</td>
-          <td>Дата закінчення</td>
-          <td>Кількість учнів</td>
-          <td>Вартість</td>
-        </tr>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
