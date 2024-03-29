@@ -12,6 +12,7 @@ import StudentAdd from './components/forms/StudentAdd';
 import StudentAddContract from './components/forms/StudentAddContract';
 import StudentsBalance from './components/pages/StudentsBalance';
 import Course from './components/pages/Course';
+import Payment from './components/pages/Payment';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/students/:id/addContract" element={<StudentAddContract />} />
             <Route path="/studentsBalance" element={<StudentsBalance />} />
             <Route path="/courses" element={<Course />} />
+            <Route path="/payment" element={<Payment />} />
           </Route>
           <Route path="/login2" element={<Login />} />
         </Routes>

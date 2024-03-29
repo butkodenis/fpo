@@ -31,7 +31,7 @@ const Sidebar = () => {
                 >
                   Особові рахунки
                 </Link>
-                <Link to="/" className="btn  btn-sm btn-outline-secondary w-75  ms-3">
+                <Link to="/payment" className="btn  btn-sm btn-outline-secondary w-75  ms-3">
                   Платежі
                 </Link>
               </div>

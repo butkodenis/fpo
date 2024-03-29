@@ -9,7 +9,7 @@ const Layout = () => {
         {/* Боковая панель */}
         <Sidebar />
         {/* Основное содержимое */}
-        <div className="flex-grow-1  mt-2 overflow-auto">
+        <div className="flex-grow-1  m-3 overflow-auto">
           <Outlet />
         </div>
       </div>
