@@ -3,17 +3,16 @@ body {
   background-color: #f4f4f4;
 }
 nav {
-  width: 300px;
 }
 nav button {
-  width: 250px;
+  width: 220px;
 }
 
 nav .dropdown-menu {
   width: 250px;
 }
 nav a {
-  width: 250px;
+  width: 220px;
 }
 
 .card {
