@@ -6,7 +6,7 @@ const Payment = () => {
   return (
     <div>
       <h1>Payment</h1>
-      <Link to="/payment/add">Додати платіж</Link>
+
       <PaymentTable />
     </div>
   );

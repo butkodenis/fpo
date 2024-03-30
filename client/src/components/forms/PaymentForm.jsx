@@ -1,9 +1,11 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 const PaymentForm = () => {
+  const [students, setStudents] = useState([]);
+  const { id } = useParams();
   const navigate = useNavigate();
   const {
     register,
@@ -14,6 +16,11 @@ const PaymentForm = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/payment/${id}/create`,
+        data,
+      );
+      console.log(res.data);
       navigate('/payment');
     } catch (error) {
       console.error(error);

@@ -8,7 +8,7 @@ const StudentsBalanceTable = () => {
   const fetchBalance = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/balance/getAll`);
-      console.log(res.data);
+      // console.log(res.data);
       setBalanceData(res.data);
     } catch (error) {
       console.error(error);
