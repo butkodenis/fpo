@@ -8,7 +8,6 @@ const FormContract = ({ contract, fetchStudent }) => {
     defaultValues: {
       startDate: contract.startDate.split('T')[0],
       endDate: contract.endDate.split('T')[0],
-
       payDate: contract.payDate.split('T')[0],
       part: contract.part,
       numOrder: contract.numOrder,
@@ -50,7 +49,7 @@ const FormContract = ({ contract, fetchStudent }) => {
       <div className="mb-3">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
-            <div className="form-group col-3">
+            <div className="form-group col-2">
               <label htmlFor="num">№ договору</label>
               <input
                 type="number"
@@ -71,16 +70,28 @@ const FormContract = ({ contract, fetchStudent }) => {
               />
             </div>
             {contract.urFullName && (
-              <div className="form-group col-6">
-                <label htmlFor="urFullName">Юр. особа</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="urFullName"
-                  defaultValue={contract.urFullName}
-                  disabled
-                />
-              </div>
+              <>
+                <div className="form-group col-5">
+                  <label htmlFor="urFullName">Юр. особа</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="urFullName"
+                    defaultValue={contract.urFullName}
+                    disabled
+                  />
+                </div>
+                <div className="form-group col-2">
+                  <label htmlFor="edrpou">ЄДРПОУ</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="edrpou"
+                    defaultValue={contract.edrpou}
+                    disabled
+                  />
+                </div>
+              </>
             )}
           </div>
           <div className="row">

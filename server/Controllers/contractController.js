@@ -6,14 +6,26 @@ const createContract = async (req, res) => {
   try {
     console.log(req.body);
     const { id } = req.params;
-    const { courseId, startDate, endDate, urFullName, part, payDate, num, numDate, numOrder } =
-      req.body;
+    const {
+      courseId,
+      startDate,
+      endDate,
+      urFullName,
+      edrpou,
+      part,
+      payDate,
+      num,
+      numDate,
+      numOrder,
+    } = req.body;
+
     const contract = new Contract({
       student: id,
       course: courseId,
       startDate,
       endDate,
       urFullName,
+      edrpou,
       part,
       payDate,
       numOrder,

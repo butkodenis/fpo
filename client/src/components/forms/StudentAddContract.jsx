@@ -67,6 +67,7 @@ const StudentAddContract = () => {
               <label htmlFor="endDate">Дата закінчення</label>
               <input type="date" className="form-control" id="endDate" {...register('endDate')} />
             </div>
+
             <div className="form-group col-4 mb-3">
               <label htmlFor="numOrder">№ наказу</label>
               <input
@@ -77,14 +78,20 @@ const StudentAddContract = () => {
               />
             </div>
           </div>
-          <div className="form-group mb-3">
-            <label htmlFor="urFullName">Юр. особа</label>
-            <input
-              type="text"
-              className="form-control"
-              id="urFullName"
-              {...register('urFullName')}
-            />
+          <div className="row">
+            <div className="form-group col-8 mb-3">
+              <label htmlFor="urFullName">Юр. особа</label>
+              <input
+                type="text"
+                className="form-control"
+                id="urFullName"
+                {...register('urFullName')}
+              />
+            </div>
+            <div className="form-group col-4 mb-3">
+              <label htmlFor="edrpou">ЄДРПОУ</label>
+              <input type="number" className="form-control" id="edrpou" {...register('edrpou')} />
+            </div>
           </div>
 
           <div className="row">

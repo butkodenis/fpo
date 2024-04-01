@@ -6,6 +6,7 @@ const contractSchema = new mongoose.Schema({
   num: { type: Number },
   numDate: { type: Date },
   urFullName: { type: String },
+  edrpou: { type: String },
   startDate: { type: Date },
   endDate: { type: Date },
   part: { type: Number },
