@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
+// Компонент PaymentForm
+
 const PaymentForm = () => {
   const [urData, setUrData] = useState([]);
   const { id } = useParams();
@@ -13,26 +15,26 @@ const PaymentForm = () => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    fetchUr();
+  }, []);
+
   const fetchUr = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/contracts`);
       console.log(res.data);
-      const resuilt = res.data
+      const result = res.data
         .filter((obj) => obj.urFullName !== '')
         .map((obj) => ({
           urFullName: obj.urFullName,
           edrpou: obj.edrpou,
         }));
-      console.log(resuilt);
-      setUrData(resuilt);
+      console.log(result);
+      setUrData(result);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    fetchUr();
-  }, []);
 
   const onSubmit = async (data) => {
     // Преобразование значения amount в число
@@ -87,23 +89,33 @@ const PaymentForm = () => {
             <div className="form-group mb-3">
               <label htmlFor="urFullName">П.І.Б. платника</label>
               <input
-                type="text"
+                list="urFullNameOptions"
                 className="form-control"
                 id="urFullName"
                 {...register('urFullName', { required: true })}
               />
+              <datalist id="urFullNameOptions">
+                {urData.map((item, index) => (
+                  <option key={index} value={item.urFullName} />
+                ))}
+              </datalist>
             </div>
             <div className="form-group mb-3">
               <label htmlFor="edrpou">ЄДРПОУ</label>
               <input
-                type="text"
+                list="edrpouOptions"
                 className="form-control"
                 id="edrpou"
                 {...register('edrpou', { required: true })}
               />
+              <datalist id="edrpouOptions">
+                {urData.map((item, index) => (
+                  <option key={index} value={item.edrpou} />
+                ))}
+              </datalist>
             </div>
 
-            <button type="submit" className="btn btn-info ">
+            <button type="submit" className="btn btn-info">
               Додати
             </button>
           </form>
