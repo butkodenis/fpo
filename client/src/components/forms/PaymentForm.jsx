@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 const PaymentForm = () => {
-  const [students, setStudents] = useState([]);
+  const [urData, setUrData] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -13,10 +13,31 @@ const PaymentForm = () => {
     formState: { errors },
   } = useForm();
 
+  const fetchUr = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/contracts`);
+      console.log(res.data);
+      const resuilt = res.data
+        .filter((obj) => obj.urFullName !== '')
+        .map((obj) => ({
+          urFullName: obj.urFullName,
+          edrpou: obj.edrpou,
+        }));
+      console.log(resuilt);
+      setUrData(resuilt);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUr();
+  }, []);
+
   const onSubmit = async (data) => {
     // Преобразование значения amount в число
     data.amount = parseFloat(data.amount);
-    console.log(data);
+    // console.log(data);
 
     try {
       const res = await axios.post(
@@ -63,6 +84,25 @@ const PaymentForm = () => {
                 {...register('numberPayment', { required: true })}
               />
             </div>
+            <div className="form-group mb-3">
+              <label htmlFor="urFullName">П.І.Б. платника</label>
+              <input
+                type="text"
+                className="form-control"
+                id="urFullName"
+                {...register('urFullName', { required: true })}
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="edrpou">ЄДРПОУ</label>
+              <input
+                type="text"
+                className="form-control"
+                id="edrpou"
+                {...register('edrpou', { required: true })}
+              />
+            </div>
+
             <button type="submit" className="btn btn-info ">
               Додати
             </button>
