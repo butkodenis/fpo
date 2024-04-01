@@ -2,6 +2,15 @@ const Contract = require('../Model/contractModel');
 const StudentsBalance = require('../Model/studentsBalanceModel');
 const Course = require('../Model/courseModel');
 
+const getContracts = async (req, res) => {
+  try {
+    const contracts = await Contract.find();
+    return res.status(200).json(contracts);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const createContract = async (req, res) => {
   try {
     console.log(req.body);
@@ -98,4 +107,4 @@ const deleteContract = async (req, res) => {
   }
 };
 
-module.exports = { createContract, deleteContract, updateContract };
+module.exports = { getContracts, createContract, deleteContract, updateContract };

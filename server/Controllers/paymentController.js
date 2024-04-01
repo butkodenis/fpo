@@ -3,7 +3,7 @@ const StudentsBalance = require('../Model/studentsBalanceModel');
 
 const getPayments = async (req, res) => {
   try {
-    const payments = await Payment.find();
+    const payments = await Payment.find().populate('student');
     res.status(200).json(payments);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ const getPayments = async (req, res) => {
 const getStudentPayments = async (req, res) => {
   try {
     const { id } = req.params;
-    const payments = await Payment.find({ student: id });
+    const payments = await Payment.find({ student: id }).populate('student');
     res.status(200).json(payments);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ const getStudentPayments = async (req, res) => {
 const createPayment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { payDate, amount, numberPayment } = req.body;
+    const { payDate, amount, numberPayment, urFullName, edrpou } = req.body;
 
     console.log(req.body);
 
@@ -32,6 +32,8 @@ const createPayment = async (req, res) => {
       amount,
       payDate,
       numberPayment,
+      urFullName,
+      edrpou,
     });
     await newPayment.save();
 

@@ -7,6 +7,8 @@ const paymentSchema = new mongoose.Schema({
   numberPayment: { type: Number },
   year: { type: Number, default: new Date().getFullYear() },
   month: { type: Number, default: new Date().getMonth() + 1 },
+  urFullName: { type: String },
+  edrpou: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 
