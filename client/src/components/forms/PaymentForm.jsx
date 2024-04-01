@@ -14,7 +14,10 @@ const PaymentForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    // Преобразование значения amount в число
+    data.amount = parseFloat(data.amount);
     console.log(data);
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/payment/${id}/create`,
