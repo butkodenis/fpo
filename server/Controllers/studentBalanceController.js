@@ -31,7 +31,7 @@ const closeMonth = async (req, res) => {
       return {
         student,
         balanceStart: balanceEnd,
-        balanceEnd: 0,
+        balanceEnd: balanceEnd,
         accrued: 0,
         payment: 0,
         year: nextYear,
