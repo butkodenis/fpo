@@ -90,7 +90,7 @@ const StudentAddContract = () => {
             </div>
             <div className="form-group col-4 mb-3">
               <label htmlFor="edrpou">ЄДРПОУ</label>
-              <input type="number" className="form-control" id="edrpou" {...register('edrpou')} />
+              <input type="text" className="form-control" id="edrpou" {...register('edrpou')} />
             </div>
           </div>
 
