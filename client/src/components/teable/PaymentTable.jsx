@@ -34,8 +34,6 @@ const PaymentTable = () => {
   const table = useMaterialReactTable({
     columns,
     data: paymentData,
-    enableRowActions: true,
-    enableRowSelection: true,
     localization: MRT_Localization_UK,
   });
 
