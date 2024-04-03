@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTable } from 'react-table';
-import axios from 'axios';
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { MRT_Localization_UK } from 'material-react-table/locales/uk';
 
-import { formatDate } from '../util';
+import axios from 'axios';
 
 const PaymentTable = () => {
   const [paymentData, setPaymentData] = useState([]);
@@ -19,56 +19,31 @@ const PaymentTable = () => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: 'Full Name',
-        accessor: (row) => `${row.student.lastName} ${row.student.firstName}`,
-      },
-
-      { Header: 'Amount', accessor: 'amount' },
-      { Header: 'Payment Date', accessor: 'payDate', Cell: ({ value }) => formatDate(value) },
-      { Header: 'Number Payment', accessor: 'numberPayment' },
-      { Header: 'UR Full Name', accessor: 'urFullName' },
-      { Header: 'EDRPOU', accessor: 'edrpou' },
+      { header: 'lastName', accessorKey: 'student.lastName', size: 150 },
+      { header: 'firstName', accessorKey: 'student.firstName', size: 150 },
+      { header: 'middleName', accessorKey: 'student.middleName', size: 150 },
+      { header: 'Amount', accessorKey: 'amount', size: 150 },
+      { header: 'Payment Date', accessorKey: 'payDate', size: 150 },
+      { header: 'Number Payment', accessorKey: 'numberPayment', size: 150 },
+      { header: 'UR Full Name', accessorKey: 'urFullName', size: 150 },
+      { header: 'EDRPOU', accessorKey: 'edrpou', size: 150 },
     ],
     [],
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+  const table = useMaterialReactTable({
     columns,
     data: paymentData,
+    enableRowActions: true,
+    enableRowSelection: true,
+    localization: MRT_Localization_UK,
   });
 
   useEffect(() => {
     fetchPayment();
   }, []);
 
-  return (
-    <div>
-      <table {...getTableProps()} className="table-striped table-sm table">
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+  return <MaterialReactTable table={table} />;
 };
 
 export default PaymentTable;
