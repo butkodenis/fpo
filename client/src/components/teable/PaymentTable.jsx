@@ -19,14 +19,21 @@ const PaymentTable = () => {
 
   const columns = useMemo(
     () => [
-      { header: 'lastName', accessorKey: 'student.lastName', size: 150 },
-      { header: 'firstName', accessorKey: 'student.firstName', size: 150 },
-      { header: 'middleName', accessorKey: 'student.middleName', size: 150 },
-      { header: 'Amount', accessorKey: 'amount', size: 150 },
-      { header: 'Payment Date', accessorKey: 'payDate', size: 150 },
-      { header: 'Number Payment', accessorKey: 'numberPayment', size: 150 },
-      { header: 'UR Full Name', accessorKey: 'urFullName', size: 150 },
-      { header: 'EDRPOU', accessorKey: 'edrpou', size: 150 },
+      { header: 'lastName', accessorKey: 'student.lastName', filterVariant: 'text' },
+      { header: 'firstName', accessorKey: 'student.firstName' },
+      { header: 'middleName', accessorKey: 'student.middleName' },
+      { header: 'Amount', accessorKey: 'amount', filterVariant: 'range', filterFn: 'between' },
+
+      {
+        header: 'Payment Date',
+        id: 'payDate',
+        accessorFn: (originalRow) => new Date(originalRow.payDate),
+        filterVariant: 'date-range',
+        Cell: ({ cell }) => cell.getValue().toLocaleDateString(),
+      },
+      { header: 'Number Payment', accessorKey: 'numberPayment' },
+      { header: 'UR Full Name', accessorKey: 'urFullName' },
+      { header: 'EDRPOU', accessorKey: 'edrpou' },
     ],
     [],
   );
@@ -35,6 +42,7 @@ const PaymentTable = () => {
     columns,
     data: paymentData,
     localization: MRT_Localization_UK,
+    initialState: { showColumnFilters: true },
   });
 
   useEffect(() => {
