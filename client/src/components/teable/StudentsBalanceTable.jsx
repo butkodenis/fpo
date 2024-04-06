@@ -21,10 +21,8 @@ const StudentsBalanceTable = () => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: 'Full Name',
-        accessor: (row) => `${row.student.lastName} ${row.student.firstName}`,
-      },
+      { Header: 'Призвище', accessor: 'student.lastName' },
+      { Header: "Ім'я", accessor: 'student.firstName' },
 
       { Header: 'на початок', accessor: 'balanceStart' },
       { Header: 'нараховано', accessor: 'accrued' },
