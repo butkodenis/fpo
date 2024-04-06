@@ -22,7 +22,15 @@ const PaymentTable = () => {
       { header: 'lastName', accessorKey: 'student.lastName', filterVariant: 'text' },
       { header: 'firstName', accessorKey: 'student.firstName' },
       { header: 'middleName', accessorKey: 'student.middleName' },
-      { header: 'Amount', accessorKey: 'amount', filterVariant: 'range', filterFn: 'between' },
+      {
+        header: 'Amount',
+        accessorKey: 'amount',
+        filterVariant: 'range',
+        filterFn: 'between',
+        aggregationFn: 'sum',
+        AggregatedCell: ({ cell }) => <div className="text-primary">{cell.getValue()}</div>,
+        Cell: ({ cell }) => <div className="text-danger">{cell.getValue()}</div>,
+      },
 
       {
         header: 'Payment Date',
@@ -42,7 +50,15 @@ const PaymentTable = () => {
     columns,
     data: paymentData,
     localization: MRT_Localization_UK,
-    initialState: { showColumnFilters: true },
+    enableGrouping: true,
+
+    initialState: {
+      showColumnFilters: false,
+      density: 'compact',
+      expanded: false, //expand all groups by default
+      grouping: ['payDate'], //an array of columns to group by by default (can be multiple)
+      pagination: { pageIndex: 0, pageSize: 20 },
+    },
   });
 
   useEffect(() => {
