@@ -8,7 +8,7 @@ const StudentsBalanceTable = () => {
   const fetchBalance = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/balance/getAll`);
-      // console.log(res.data);
+      console.log(res.data);
       setBalanceData(res.data);
     } catch (error) {
       console.error(error);
@@ -23,13 +23,21 @@ const StudentsBalanceTable = () => {
     () => [
       { Header: 'Призвище', accessor: 'student.lastName' },
       { Header: "Ім'я", accessor: 'student.firstName' },
-
       { Header: 'на початок', accessor: 'balanceStart' },
       { Header: 'нараховано', accessor: 'accrued' },
       { Header: 'сплачено', accessor: 'payment' },
       { Header: 'на кінець', accessor: 'balanceEnd' },
       { Header: 'рік', accessor: 'year' },
       { Header: 'місяць', accessor: 'month' },
+      {
+        Header: 'дата',
+        accessor: 'createdAt',
+        Cell: ({ value }) => {
+          const date = new Date(value);
+          const options = { year: 'numeric', month: 'long' };
+          return date.toLocaleDateString('uk-UA', options);
+        },
+      },
     ],
     [],
   );
