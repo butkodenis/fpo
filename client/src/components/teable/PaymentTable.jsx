@@ -19,11 +19,11 @@ const PaymentTable = () => {
 
   const columns = useMemo(
     () => [
-      { header: 'lastName', accessorKey: 'student.lastName', filterVariant: 'text' },
-      { header: 'firstName', accessorKey: 'student.firstName' },
-      { header: 'middleName', accessorKey: 'student.middleName' },
+      { header: 'Призвище', accessorKey: 'student.lastName', filterVariant: 'text' },
+      { header: "Ім'я", accessorKey: 'student.firstName' },
+      { header: 'По-батькові', accessorKey: 'student.middleName' },
       {
-        header: 'Amount',
+        header: 'Нараховано',
         accessorKey: 'amount',
         filterVariant: 'range',
         filterFn: 'between',
@@ -33,15 +33,15 @@ const PaymentTable = () => {
       },
 
       {
-        header: 'Payment Date',
+        header: 'Дата оплати',
         id: 'payDate',
         accessorFn: (originalRow) => new Date(originalRow.payDate),
         filterVariant: 'date-range',
         Cell: ({ cell }) => cell.getValue().toLocaleDateString(),
       },
-      { header: 'Number Payment', accessorKey: 'numberPayment' },
-      { header: 'UR Full Name', accessorKey: 'urFullName' },
-      { header: 'EDRPOU', accessorKey: 'edrpou' },
+      { header: 'Номер платіжу', accessorKey: 'numberPayment' },
+      { header: 'Юр. особа', accessorKey: 'urFullName' },
+      { header: 'ЕДРПОУ', accessorKey: 'edrpou' },
     ],
     [],
   );
