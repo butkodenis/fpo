@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useTable, useSortBy } from 'react-table';
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { MRT_Localization_UK } from 'material-react-table/locales/uk';
+
 import axios from 'axios';
 
 const StudentsBalanceTable = () => {
@@ -9,7 +11,20 @@ const StudentsBalanceTable = () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/balance/getAll`);
       console.log(res.data);
-      setBalanceData(res.data);
+
+      const formattedData = res.data.map((item) => {
+        // Extract date from 'createdAt' (assuming it's a Date object)
+        const date = new Date(item.createdAt);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+
+        // Format date as YYYY-MM for consistent sorting and display
+        item.formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}`;
+
+        return item;
+      });
+
+      setBalanceData(formattedData);
     } catch (error) {
       console.error(error);
     }
@@ -21,65 +36,40 @@ const StudentsBalanceTable = () => {
 
   const columns = useMemo(
     () => [
-      { Header: 'Призвище', accessor: 'student.lastName' },
-      { Header: "Ім'я", accessor: 'student.firstName' },
-      { Header: 'на початок', accessor: 'balanceStart' },
-      { Header: 'нараховано', accessor: 'accrued' },
-      { Header: 'сплачено', accessor: 'payment' },
-      { Header: 'на кінець', accessor: 'balanceEnd' },
-      { Header: 'рік', accessor: 'year' },
-      { Header: 'місяць', accessor: 'month' },
+      // Include the formatted date column
+      { header: 'Період', accessorKey: 'formattedDate' },
       {
-        Header: 'дата',
-        accessor: 'createdAt',
-        Cell: ({ value }) => {
-          const date = new Date(value);
-          const options = { year: 'numeric', month: 'long' };
-          return date.toLocaleDateString('uk-UA', options);
-        },
+        accessorFn: (row) =>
+          `${row.student.lastName} ${row.student.firstName} ${row.student.middleName}`,
+        header: "Призвище Ім'я",
+        accessorKey: 'student',
+        size: 300,
       },
+
+      { header: 'на початок', accessorKey: 'balanceStart' },
+      { header: 'нараховано', accessorKey: 'accrued' },
+      { header: 'сплачено', accessorKey: 'payment' },
+      { header: 'на кінець', accessorKey: 'balanceEnd' },
     ],
     [],
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data: balanceData,
+  const table = useMaterialReactTable({
+    columns,
+    data: balanceData,
+    localization: MRT_Localization_UK,
+    enableGrouping: true,
+    enableColumnResizing: true,
+    initialState: {
+      showColumnFilters: false,
+      density: 'compact',
+      grouping: ['formattedDate'], // Group by the formatted date
+      expanded: true, //expand all groups by default
+      pagination: { pageIndex: 0, pageSize: 20 },
     },
-    useSortBy,
-  );
+  });
 
-  return (
-    <div className="table-sm  table-striped table ">
-      <table className=" table-striped  table " {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+  return <MaterialReactTable table={table} />;
 };
 
 export default StudentsBalanceTable;

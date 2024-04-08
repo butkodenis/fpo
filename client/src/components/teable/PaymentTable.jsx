@@ -51,7 +51,7 @@ const PaymentTable = () => {
     data: paymentData,
     localization: MRT_Localization_UK,
     enableGrouping: true,
-
+    enableColumnResizing: true,
     initialState: {
       showColumnFilters: false,
       density: 'compact',
