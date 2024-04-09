@@ -7,7 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 const Payment = () => {
   return (
     <div>
-      <h1>Payment</h1>
+      <h1>Платежі</h1>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PaymentTable />
       </LocalizationProvider>

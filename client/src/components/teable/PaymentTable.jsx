@@ -28,8 +28,10 @@ const PaymentTable = () => {
         filterVariant: 'range',
         filterFn: 'between',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <div className="text-primary">{cell.getValue()}</div>,
-        Cell: ({ cell }) => <div className="text-danger">{cell.getValue()}</div>,
+        AggregatedCell: ({ cell }) => (
+          <div className="badge text-bg-primary">{cell.getValue()}</div>
+        ),
+        Cell: ({ cell }) => <div className="badge text-bg-info">{cell.getValue()}</div>,
       },
 
       {
@@ -50,13 +52,13 @@ const PaymentTable = () => {
     columns,
     data: paymentData,
     localization: MRT_Localization_UK,
-    enableGrouping: true,
-    enableColumnResizing: true,
+    enableGrouping: true, // включити групування
+    enableColumnResizing: true, // включити зміну розміру колонок
     initialState: {
-      showColumnFilters: false,
-      density: 'compact',
-      expanded: false, //expand all groups by default
-      grouping: ['payDate'], //an array of columns to group by by default (can be multiple)
+      showColumnFilters: false, // показувати фільтри колонок
+      density: 'compact', // плотність таблиці
+      expanded: false, // розгорнутий рядок
+      grouping: ['payDate'], // групування по даті
       pagination: { pageIndex: 0, pageSize: 20 },
     },
   });

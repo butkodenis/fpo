@@ -12,19 +12,7 @@ const StudentsBalanceTable = () => {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/balance/getAll`);
       console.log(res.data);
 
-      const formattedData = res.data.map((item) => {
-        // Extract date from 'createdAt' (assuming it's a Date object)
-        const date = new Date(item.createdAt);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-
-        // Format date as YYYY-MM for consistent sorting and display
-        item.formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}`;
-
-        return item;
-      });
-
-      setBalanceData(formattedData);
+      setBalanceData(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +25,7 @@ const StudentsBalanceTable = () => {
   const columns = useMemo(
     () => [
       // Include the formatted date column
-      { header: 'Період', accessorKey: 'formattedDate' },
+
       {
         accessorFn: (row) =>
           `${row.student.lastName} ${row.student.firstName} ${row.student.middleName}`,
@@ -49,7 +37,26 @@ const StudentsBalanceTable = () => {
       { header: 'на початок', accessorKey: 'balanceStart' },
       { header: 'нараховано', accessorKey: 'accrued' },
       { header: 'сплачено', accessorKey: 'payment' },
-      { header: 'на кінець', accessorKey: 'balanceEnd' },
+      {
+        header: 'на кінець',
+        accessorKey: 'balanceEnd',
+        Cell: ({ cell }) => {
+          const value = cell.getValue();
+          const badgeClass = value < 0 ? 'badge text-bg-warning' : 'badge text-bg-primary';
+          return <div className={badgeClass}>{value}</div>;
+        },
+      },
+      { header: 'рік', accessorKey: 'year' },
+      {
+        header: 'місяць',
+        accessorKey: 'month',
+        Cell: ({ cell }) => {
+          const value = cell.getValue();
+          const date = new Date(null, value - 1); // value - 1, так как месяцы в JavaScript начинаются с 0
+          const monthName = date.toLocaleString('uk-UA', { month: 'long' });
+          return <div>{monthName}</div>;
+        },
+      },
     ],
     [],
   );
@@ -57,15 +64,15 @@ const StudentsBalanceTable = () => {
   const table = useMaterialReactTable({
     columns,
     data: balanceData,
-    localization: MRT_Localization_UK,
-    enableGrouping: true,
-    enableColumnResizing: true,
+    localization: MRT_Localization_UK, // українська локалізація
+    enableGrouping: true, // включити групування
+    enableColumnResizing: true, // включити зміну розміру колонок
     initialState: {
-      showColumnFilters: false,
-      density: 'compact',
-      grouping: ['formattedDate'], // Group by the formatted date
-      expanded: true, //expand all groups by default
-      pagination: { pageIndex: 0, pageSize: 20 },
+      showColumnFilters: false, // показувати фільтри колонок
+      density: 'compact', // плотний режим
+      grouping: ['year', 'month'], // групувати за роком і місяцем
+      expanded: true, //развернуть все группы по умолчанию
+      pagination: { pageIndex: 0, pageSize: 20 }, // пагинация
     },
   });
 
