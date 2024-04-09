@@ -31,7 +31,7 @@ const PaymentTable = () => {
         AggregatedCell: ({ cell }) => (
           <div className="badge text-bg-primary">{cell.getValue()}</div>
         ),
-        Cell: ({ cell }) => <div className="badge text-bg-info">{cell.getValue()}</div>,
+        Cell: ({ cell }) => <div className="badge text-bg-light">{cell.getValue()}</div>,
       },
 
       {
