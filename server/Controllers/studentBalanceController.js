@@ -27,12 +27,14 @@ const closeMonth = async (req, res) => {
     // console.log(studentsBalance);
 
     const studentsBalanceNextMonth = studentsBalance.map((studentBalance) => {
-      const { student, balanceEnd } = studentBalance;
+      const { student, contract, accruedPlan, balanceEnd } = studentBalance;
       return {
         student,
+        contract,
         balanceStart: balanceEnd,
         balanceEnd: balanceEnd,
-        accrued: 0,
+        accrued: accruedPlan.length ? accruedPlan.shift() : 0,
+        accruedPlan,
         payment: 0,
         year: nextYear,
         month: nextMonth,

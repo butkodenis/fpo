@@ -1,6 +1,7 @@
 const Contract = require('../Model/contractModel');
 const StudentsBalance = require('../Model/studentsBalanceModel');
 const Course = require('../Model/courseModel');
+const splitPayment = require('../util/splitPayment');
 
 const getContracts = async (req, res) => {
   try {
@@ -43,16 +44,47 @@ const createContract = async (req, res) => {
     });
     const saveContract = await contract.save();
 
-    // Создаем строку баланса для студента
+    // Создаем строку баланса для студента на текущий месяц
 
     const { price } = await Course.findById(courseId);
+
+    if (!price) {
+      return res.status(400).json({ message: 'Ціна курсу не знайдена' });
+    }
+
+    if (!saveContract) {
+      return res.status(400).json({ message: 'Контракт не збережено' });
+    }
+
+    if (part === 1) {
+      const studentBalance = new StudentsBalance({
+        student: id,
+        contract: saveContract.id,
+        balanceStart: 0,
+        accrued: -price,
+        balanceEnd: -price,
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+      });
+
+      await studentBalance.save();
+
+      return res.status(200).json({ message: 'Контракт створено успішно' });
+    }
+
+    // Если платеж дробный, то разбиваем его на части
+
+    let payParts = splitPayment(price, part);
+    console.log(payParts);
+    const currentPay = payParts.shift();
 
     const studentBalance = new StudentsBalance({
       student: id,
       contract: saveContract.id,
       balanceStart: 0,
-      accrued: -price,
-      balanceEnd: -price,
+      accrued: -currentPay,
+      accruedPlan: payParts,
+      balanceEnd: -price / part,
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
     });
