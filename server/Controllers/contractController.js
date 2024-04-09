@@ -74,17 +74,17 @@ const createContract = async (req, res) => {
 
     // Если платеж дробный, то разбиваем его на части
 
-    let payParts = splitPayment(price, part);
-    console.log(payParts);
-    const currentPay = payParts.shift();
+    let payParts = splitPayment(price, part); // получаем массив с частями платежа
+
+    const currentPay = payParts.shift(); // получаем сумму текущего платежа и удаляем ее из массива платежей
 
     const studentBalance = new StudentsBalance({
       student: id,
       contract: saveContract.id,
       balanceStart: 0,
-      accrued: -currentPay,
-      accruedPlan: payParts,
-      balanceEnd: -price / part,
+      accrued: -currentPay, // сумма текущего начисления
+      accruedPlan: payParts, // массив с оставшимися частями платежа
+      balanceEnd: -currentPay, //  на конец месяца баланс равен сумме текущего начисления
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
     });
