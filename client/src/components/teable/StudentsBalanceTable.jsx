@@ -34,12 +34,37 @@ const StudentsBalanceTable = () => {
         size: 300,
       },
 
-      { header: 'на початок', accessorKey: 'balanceStart' },
-      { header: 'нараховано', accessorKey: 'accrued' },
-      { header: 'сплачено', accessorKey: 'payment' },
+      {
+        header: 'на початок',
+        accessorKey: 'balanceStart',
+        aggregationFn: 'sum',
+        AggregatedCell: ({ cell }) => (
+          <div className="badge text-bg-primary">{cell.getValue()}</div>
+        ),
+      },
+      {
+        header: 'нараховано',
+        accessorKey: 'accrued',
+        aggregationFn: 'sum',
+        AggregatedCell: ({ cell }) => (
+          <div className="badge text-bg-primary">{cell.getValue()}</div>
+        ),
+      },
+      {
+        header: 'сплачено',
+        accessorKey: 'payment',
+        aggregationFn: 'sum',
+        AggregatedCell: ({ cell }) => (
+          <div className="badge text-bg-primary">{cell.getValue()}</div>
+        ),
+      },
       {
         header: 'на кінець',
         accessorKey: 'balanceEnd',
+        aggregationFn: 'sum',
+        AggregatedCell: ({ cell }) => (
+          <div className="badge text-bg-warning">{cell.getValue()}</div>
+        ),
         Cell: ({ cell }) => {
           const value = cell.getValue();
           const badgeClass = value < 0 ? 'badge text-bg-warning' : 'badge text-bg-primary';
