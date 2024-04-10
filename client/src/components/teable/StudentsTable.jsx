@@ -5,7 +5,7 @@ import { MRT_Localization_UK } from 'material-react-table/locales/uk';
 
 import axios from 'axios';
 
-const StudentsTeable = () => {
+const StudentsTable = () => {
   const [students, setStudents] = useState([]);
 
   const fetchStudents = async () => {
@@ -36,9 +36,11 @@ const StudentsTeable = () => {
 
   const columns = useMemo(
     () => [
-      { header: 'Призвище', accessorKey: 'lastName' },
-      { header: "Ім'я", accessorKey: 'firstName' },
-      { header: 'По-батькові', accessorKey: 'middleName' },
+      {
+        accessorFn: (row) => `${row.lastName} ${row.firstName} ${row.middleName}`,
+        header: 'ПІБ',
+        accessorKey: 'fullName',
+      },
       { header: 'Телефон', accessorKey: 'phone' },
       { header: 'Паспорт', accessorKey: 'passport' },
     ],
@@ -50,40 +52,40 @@ const StudentsTeable = () => {
     data: students,
     localization: MRT_Localization_UK,
     enableRowActions: true,
+    initialState: {
+      density: 'compact',
+      showColumnFilters: true,
+      pagination: {
+        pageSize: 30,
+      },
+    },
     renderRowActionMenuItems: ({ row }) => [
       <div>
-        <ul class="list-group">
-          <li class="dropdown-item">
-            <button className="btn btn-info btn-sm">
-              <i className="bi bi-trash"></i>
-            </button>
-          </li>
-          <li class="dropdown-item">
-            {' '}
-            <Link className="btn btn-info btn-sm" to={`/students/${row.original._id}`}>
-              <i className="bi bi-eye"></i>
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item  ">
+            <Link className="btn  btn-sm" to={`/students/${row.original._id}`}>
+              <i className="bi bi-eye"></i> Детально
             </Link>
           </li>
-          <li class="dropdown-item">
-            <Link className="btn btn-info btn-sm" to={`/students/${row.original._id}/addContract`}>
-              Додати договір
+          <li class="list-group-item">
+            <Link className="btn  btn-sm" to={`/students/${row.original._id}/addContract`}>
+              <i class="bi bi-file-text"></i> Додати договір
             </Link>
           </li>
-          <li class="dropdown-item">
-            <Link className="btn btn-info btn-sm" to={`/students/${row.original._id}/addPayment`}>
-              Додати платіж
+
+          <li class="list-group-item">
+            <Link className="btn  btn-sm" to={`/students/${row.original._id}/addPayment`}>
+              <i class="bi bi-credit-card"></i> Додати платіж
             </Link>
           </li>
-          <li>
-            <hr className="dropdown-divider" />
-          </li>
-          <li class="dropdown-item">
+
+          <li class="list-group-item">
             <button
-              className="dropdown-item btn btn-danger  text-danger"
+              className="btn  btn-sm "
               type="button"
               onClick={() => deleteStudent(row.original._id)}
             >
-              <i className="bi bi-trash"></i>
+              <i className="bi bi-trash"></i> Видалити
             </button>
           </li>
         </ul>
@@ -91,7 +93,11 @@ const StudentsTeable = () => {
     ],
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <MaterialReactTable table={table} />
+    </>
+  );
 };
 
-export default StudentsTeable;
+export default StudentsTable;

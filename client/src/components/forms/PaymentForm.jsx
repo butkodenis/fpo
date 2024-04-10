@@ -92,7 +92,7 @@ const PaymentForm = () => {
                 list="urFullNameOptions"
                 className="form-control"
                 id="urFullName"
-                {...register('urFullName', { required: true })}
+                {...register('urFullName')}
               />
               <datalist id="urFullNameOptions">
                 {urData.map((item, index) => (
@@ -106,7 +106,7 @@ const PaymentForm = () => {
                 list="edrpouOptions"
                 className="form-control"
                 id="edrpou"
-                {...register('edrpou', { required: true })}
+                {...register('edrpou')}
               />
               <datalist id="edrpouOptions">
                 {urData.map((item, index) => (

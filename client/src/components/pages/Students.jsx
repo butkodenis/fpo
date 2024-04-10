@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import StudentsTeable from '../teable/StudentsTable';
 
 const Students = () => {
   return (
-    <div className="d-flex flex-column">
-      <h4>Студенти</h4>
-      <Link to="/students/add" className="btn btn-primary btn-sm w-25 mb-4">
-        <i className="bi bi-person-plus-fill"></i>
+    <Container maxWidth>
+      <Typography variant="h4" gutterBottom>
+        Студенты
+      </Typography>
+      <Link to="/students/add" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" startIcon={<PersonAddIcon />} fullWidth>
+          Добавить студента
+        </Button>
       </Link>
 
       <StudentsTeable />
-    </div>
+    </Container>
   );
 };
 
