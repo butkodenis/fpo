@@ -92,6 +92,7 @@ const StudentsBalanceTable = () => {
     localization: MRT_Localization_UK, // українська локалізація
     enableGrouping: true, // включити групування
     enableColumnResizing: true, // включити зміну розміру колонок
+    enableColumnFilterModes: true, // включити фільтрацію колонок по режимах
     initialState: {
       showColumnFilters: false, // показувати фільтри колонок
       density: 'compact', // плотний режим
