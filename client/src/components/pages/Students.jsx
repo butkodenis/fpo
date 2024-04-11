@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,7 +10,7 @@ import StudentsTeable from '../teable/StudentsTable';
 
 const Students = () => {
   return (
-    <Container maxWidth>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Студенты
       </Typography>
@@ -20,7 +21,7 @@ const Students = () => {
       </Link>
 
       <StudentsTeable />
-    </Container>
+    </Box>
   );
 };
 
