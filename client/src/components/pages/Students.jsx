@@ -11,9 +11,6 @@ import StudentsTeable from '../teable/StudentsTable';
 const Students = () => {
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        Студенты
-      </Typography>
       <Link to="/students/add" style={{ textDecoration: 'none' }}>
         <Button variant="contained" startIcon={<PersonAddIcon />} fullWidth>
           Добавить студента
