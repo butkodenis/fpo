@@ -2,6 +2,17 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { MRT_Localization_UK } from 'material-react-table/locales/uk';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import Divider from '@mui/material/Divider';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import FeedIcon from '@mui/icons-material/Feed';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 import axios from 'axios';
 
@@ -60,36 +71,44 @@ const StudentsTable = () => {
       },
     },
     renderRowActionMenuItems: ({ row }) => [
-      <div>
-        <ul class="list-group list-group-flush ">
-          <li class="list-group-item  ">
-            <Link className="btn  btn-sm" to={`/students/${row.original._id}`}>
-              <i className="bi bi-eye"></i> Детально
-            </Link>
-          </li>
-          <li class="list-group-item">
-            <Link className="btn  btn-sm" to={`/students/${row.original._id}/addContract`}>
-              <i class="bi bi-file-text"></i> Додати договір
-            </Link>
-          </li>
+      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List>
+          <ListItem>
+            <ListItemButton component={Link} to={`/students/${row.original._id}`}>
+              <ListItemIcon>
+                <VisibilityIcon />
+              </ListItemIcon>
+              Детально
+            </ListItemButton>
+          </ListItem>
 
-          <li class="list-group-item">
-            <Link className="btn  btn-sm" to={`/students/${row.original._id}/addPayment`}>
-              <i class="bi bi-credit-card"></i> Додати платіж
-            </Link>
-          </li>
-
-          <li class="list-group-item">
-            <button
-              className="btn  btn-sm "
-              type="button"
-              onClick={() => deleteStudent(row.original._id)}
-            >
-              <i className="bi bi-trash"></i> Видалити
-            </button>
-          </li>
-        </ul>
-      </div>,
+          <ListItem>
+            <ListItemButton component={Link} to={`/students/${row.original._id}/addContract`}>
+              <ListItemIcon>
+                <FeedIcon />
+              </ListItemIcon>
+              Додати договір
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton component={Link} to={`/students/${row.original._id}/addPayment`}>
+              <ListItemIcon>
+                <PaymentIcon />
+              </ListItemIcon>
+              Додати платіж
+            </ListItemButton>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemButton onClick={() => deleteStudent(row.original._id)}>
+              <ListItemIcon>
+                <DeleteIcon />
+              </ListItemIcon>
+              Видалити
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>,
     ],
   });
 
