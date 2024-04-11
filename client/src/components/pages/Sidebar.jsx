@@ -1,66 +1,68 @@
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 const Sidebar = () => {
   return (
-    <nav id="sidebar" className="d-flex flex-column  ">
-      <div className="d-flex flex-column align-items-center">
-        <h3 className="text-center">Меню</h3>
-        <div className="container">
-          <ul className="list-unstyled">
-            <li className="mb-2">
-              <Link to="/" className="btn btn-dark btn-block text-left">
-                Інформаційна панель
-              </Link>
-            </li>
-
-            <li className="mb-2">
-              <button
-                className="btn btn-dark mb-1"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseExample"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-              >
-                Рахунки
-              </button>
-              <div className="collapse " id="collapseExample">
-                <Link
-                  to="/studentsBalance"
-                  className="btn  btn-sm  btn-outline-secondary w-75 m-1   ms-3"
-                >
-                  Особові рахунки
-                </Link>
-                <Link to="/payment" className="btn  btn-sm btn-outline-secondary w-75  ms-3">
-                  Платежі
-                </Link>
-              </div>
-            </li>
-            <li className="mb-2">
-              <Link to="/students" className="btn btn-dark btn-block text-left ">
-                Студенти
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="/courses" className="btn btn-dark btn-block text-left">
-                Курси
-              </Link>
-            </li>
-
-            <li className="mb-2">
-              <Link to="/users" className="btn btn-dark btn-block text-left">
-                Користувачі
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="/login" className="btn btn-outline-secondary btn-block text-left">
-                Login
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': { width: 240, boxSizing: 'border-box' },
+      }}
+    >
+      <Toolbar />
+      <Box sx={{ overflow: 'auto' }}>
+        <List>
+          <ListItem component={Link} to="/" button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Інформаційна панель" />
+          </ListItem>
+          <ListItem component={Link} to="/studentsBalance" button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Особові рахунки" />
+          </ListItem>
+          <ListItem component={Link} to="/payment" button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Платежі" />
+          </ListItem>
+          <ListItem component={Link} to="/students" button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Студенти" />
+          </ListItem>
+          <ListItem component={Link} to="/courses" button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Курси" />
+          </ListItem>
+          <ListItem component={Link} to="/users" button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Користувачі" />
+          </ListItem>
+        </List>
+        <Divider />
+      </Box>
+    </Drawer>
   );
 };
 
