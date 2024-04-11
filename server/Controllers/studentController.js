@@ -1,4 +1,5 @@
 const Student = require('../Model/studentModel');
+const Contract = require('../Model/contractModel');
 
 const getAllStudents = async (req, res) => {
   try {
@@ -12,11 +13,18 @@ const getAllStudents = async (req, res) => {
 const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await Student.findById(id).populate('courses.course');
+    const student = await Student.findById(id);
+    const contracts = await Contract.find({ student: id }).populate('course');
+    // console.log(contracts);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    return res.status(200).json(student);
+    // Создаем объект, содержащий данные студента и контракты
+    const data = {
+      student: student,
+      contracts: contracts,
+    };
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -24,7 +32,7 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { firstName, lastName, middleName, phone } = req.body;
+    const { firstName, lastName, middleName, phone, ur } = req.body;
 
     // перевірка чи студент вже існує
     const existingStudent = await Student.findOne({ firstName, lastName, middleName });
@@ -33,7 +41,7 @@ const createStudent = async (req, res) => {
       return res.status(400).json({ message: 'Студент вже існує' });
     }
 
-    const student = new Student({ firstName, lastName, middleName, phone });
+    const student = new Student({ firstName, lastName, middleName, phone, ur });
     await student.save();
     return res.status(201).json({ message: `Студента створено успішно` });
   } catch (error) {
@@ -44,13 +52,13 @@ const createStudent = async (req, res) => {
 const addCourseToStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseId, startDate, endDate } = req.body;
+    const { courseId, startDate, endDate, chair, status } = req.body;
 
     const student = await Student.findById(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
-    student.courses.push({ course: courseId, startDate, endDate });
+    student.courses.push({ course: courseId, startDate, endDate, chair, status });
     await student.save();
     return res.status(200).json({ message: 'Курс додано до студента успішно' });
   } catch (error) {
@@ -77,10 +85,18 @@ const updateStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const contracts = await Contract.find({ student: id });
+    console.log('кол-во контр', contracts.length);
+    if (contracts.length > 0) {
+      return res.json({ message: 'Студента видалити не можливо' });
+    }
+
     const student = await Student.findByIdAndDelete(id);
     if (!student) {
       return res.status(400).json({ message: 'Студента не знайдено' });
     }
+
     return res.status(200).json({ message: 'Студента видалено успішно' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
