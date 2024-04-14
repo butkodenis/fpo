@@ -71,7 +71,10 @@ const StudentsTable = () => {
       },
     },
     renderRowActionMenuItems: ({ row }) => [
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box
+        key={row.original._id}
+        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      >
         <List>
           <ListItem>
             <ListItemButton component={Link} to={`/students/${row.original._id}`}>
