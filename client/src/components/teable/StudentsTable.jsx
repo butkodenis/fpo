@@ -18,14 +18,18 @@ import axios from 'axios';
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchStudents = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/getAll`);
       setStudents(res.data);
       //console.log(res.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -115,11 +119,7 @@ const StudentsTable = () => {
     ],
   });
 
-  return (
-    <>
-      <MaterialReactTable table={table} />
-    </>
-  );
+  return <>{isLoading ? <div>Loading...</div> : <MaterialReactTable table={table} />}</>;
 };
 
 export default StudentsTable;
