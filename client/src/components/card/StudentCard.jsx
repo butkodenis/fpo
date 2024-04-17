@@ -42,7 +42,7 @@ const StudentCard = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: 275, mx: '2px', transform: 'scale(0.8)' }}>
+      <Box>
         {loading ? (
           <CircularProgress />
         ) : (
@@ -59,6 +59,7 @@ const StudentCard = () => {
               {contracts.map((contract, index) => (
                 <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
               ))}
+              <hr />
               <Link to="/students">
                 <Button variant="contained" color="primary">
                   Повернутися
