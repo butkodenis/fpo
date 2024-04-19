@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -42,33 +43,35 @@ const StudentCard = () => {
 
   return (
     <>
-      <Box>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <Card variant="outlined">
-            <CardContent>
-              <Typography variant="h5" component="div">
-                {student.lastName} {student.firstName} {student.middleName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                тел.: {student.phone}
-              </Typography>
+      <Container>
+        <Box>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {student.lastName} {student.firstName} {student.middleName}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  тел.: {student.phone}
+                </Typography>
 
-              <hr />
-              {contracts.map((contract, index) => (
-                <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
-              ))}
-              <hr />
-              <Link to="/students">
-                <Button variant="contained" color="primary">
-                  Повернутися
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        )}
-      </Box>
+                <hr />
+                {contracts.map((contract, index) => (
+                  <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
+                ))}
+                <hr />
+                <Link to="/students">
+                  <Button variant="contained" color="primary">
+                    Повернутися
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          )}
+        </Box>
+      </Container>
     </>
   );
 };
