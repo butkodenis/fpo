@@ -6,11 +6,7 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import { Typography, Grid, Stack, TextField, MenuItem } from '@mui/material';
 
 const StudentAddContract = () => {
   const navigate = useNavigate();
@@ -36,9 +32,6 @@ const StudentAddContract = () => {
         data,
       );
       console.log(res.data);
-      setTimeout(() => {
-        navigate('/students');
-      }, 500);
     } catch (error) {
       console.error(error);
     }

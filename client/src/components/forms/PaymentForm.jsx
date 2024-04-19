@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { Box, Grid, TextField, Button, Typography } from '@mui/material';
 
 // Компонент PaymentForm
 
@@ -39,7 +40,7 @@ const PaymentForm = () => {
   const onSubmit = async (data) => {
     // Преобразование значения amount в число
     data.amount = parseFloat(data.amount);
-    // console.log(data);
+    console.log(data);
 
     try {
       const res = await axios.post(
@@ -55,72 +56,72 @@ const PaymentForm = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="d-flex justify-content-between">
-          <form onSubmit={handleSubmit(onSubmit)} className="w-50">
-            <h3>Додати платіж</h3>
-            <div className="form-group mb-3">
-              <label htmlFor="amount">Сумма</label>
-              <input
-                type="number"
-                className="form-control"
-                id="amount"
-                {...register('amount', { required: true })}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="payDate">Дата</label>
-              <input
-                type="date"
-                className="form-control"
-                id="payDate"
-                {...register('payDate', { required: true })}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="numberPayment">номер платіж</label>
-              <input
-                type="text"
-                className="form-control"
-                id="numberPayment"
-                {...register('numberPayment', { required: true })}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="urFullName">П.І.Б. платника</label>
-              <input
-                list="urFullNameOptions"
-                className="form-control"
-                id="urFullName"
-                {...register('urFullName')}
-              />
-              <datalist id="urFullNameOptions">
-                {urData.map((item, index) => (
-                  <option key={index} value={item.urFullName} />
-                ))}
-              </datalist>
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="edrpou">ЄДРПОУ</label>
-              <input
-                list="edrpouOptions"
-                className="form-control"
-                id="edrpou"
-                {...register('edrpou')}
-              />
-              <datalist id="edrpouOptions">
-                {urData.map((item, index) => (
-                  <option key={index} value={item.edrpou} />
-                ))}
-              </datalist>
-            </div>
+      <Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <Typography variant="h5">Додати платіж</Typography>
+            </Grid>
 
-            <button type="submit" className="btn btn-info">
-              Додати
-            </button>
-          </form>
-        </div>
-      </div>
+            <Grid container item xs={6} sm={12} spacing={2}>
+              <Grid item xs={6} sm={3}>
+                <TextField label="Сума" {...register('amount', { required: true })} />
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <TextField
+                  label="Дата оплати"
+                  type="date"
+                  defaultValue={new Date().toISOString().slice(0, 10)}
+                  {...register('payDate', { required: true })}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <TextField
+                  label="Номер платежу"
+                  {...register('numberPayment', { required: true })}
+                />
+              </Grid>
+            </Grid>
+            <Grid container item xs={6} sm={12} spacing={2}>
+              <Grid item xs={4} sm={8}>
+                <TextField
+                  label="Юр. особа"
+                  list="urFullNameOptions"
+                  {...register('urFullName')}
+                  fullWidth
+                />
+                <datalist id="urFullNameOptions">
+                  {urData.map((item, index) => (
+                    <option key={index} value={item.urFullName} />
+                  ))}
+                </datalist>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <TextField label="ЄДРПОУ" list="edrpouOptions" {...register('edrpou')} />
+                <datalist id="edrpouOptions">
+                  {urData.map((item, index) => (
+                    <option key={index} value={item.edrpou} />
+                  ))}
+                </datalist>
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} sm={12}>
+              <Grid item xs={12} sm={9}>
+                <Button variant="contained" type="submit" color="primary">
+                  Додати
+                </Button>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Link to="/students">
+                  <Button variant="contained" color="primary">
+                    Повернутися
+                  </Button>
+                </Link>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
     </>
   );
 };
