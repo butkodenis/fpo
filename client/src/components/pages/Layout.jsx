@@ -26,7 +26,7 @@ const Layout = () => {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Clipped drawer
+            Система обліку плажежів студентів інституту післядипломної освіти
           </Typography>
         </Toolbar>
       </AppBar>

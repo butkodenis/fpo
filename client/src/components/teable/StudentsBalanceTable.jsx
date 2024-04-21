@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { MRT_Localization_UK } from 'material-react-table/locales/uk';
 import Chip from '@mui/material/Chip';
+import { Typography } from '@mui/material';
 
 import axios from 'axios';
 
@@ -39,32 +40,34 @@ const StudentsBalanceTable = () => {
         header: 'на початок',
         accessorKey: 'balanceStart',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
+        AggregatedCell: ({ cell }) => <div style={{ color: 'blue' }}>{cell.getValue()}</div>,
       },
       {
         header: 'нараховано',
         accessorKey: 'accrued',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
+        AggregatedCell: ({ cell }) => <div style={{ color: 'blue' }}>{cell.getValue()}</div>,
       },
       {
         header: 'сплачено',
         accessorKey: 'payment',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
+        AggregatedCell: ({ cell }) => <div style={{ color: 'blue' }}>{cell.getValue()}</div>,
       },
       {
         header: 'на кінець',
         accessorKey: 'balanceEnd',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
-        Cell: ({ cell }) => (
-          <Chip
-            label={cell.getValue()}
-            color={cell.getValue() < 0 ? 'warning' : 'primary'}
-            size="small"
-          />
-        ),
+        AggregatedCell: ({ cell }) => <div style={{ color: 'blue' }}>{cell.getValue()}</div>,
+        Cell: ({ cell }) => {
+          const value = cell.getValue();
+          const textColor = value < 0 ? 'red' : 'inherit'; // определение цвета текста
+          return (
+            <Typography variant="p" style={{ color: textColor }}>
+              {cell.getValue()}
+            </Typography>
+          );
+        },
       },
       { header: 'рік', accessorKey: 'year' },
       {
