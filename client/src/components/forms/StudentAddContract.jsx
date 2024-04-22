@@ -51,7 +51,8 @@ const StudentAddContract = () => {
                 <TextField
                   label="Курс"
                   select
-                  id="courses"
+                  id="courseId"
+                  defaultValue={''}
                   fullWidth
                   helperText="Выберите курс"
                   {...register('courseId')}
