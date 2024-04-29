@@ -24,6 +24,7 @@ const CourseTable = () => {
       {
         header: 'Тип курсу',
         accessorKey: 'specialty',
+        size: 500,
       },
       {
         header: 'Спеціальність/Профіль',
@@ -44,6 +45,8 @@ const CourseTable = () => {
       {
         header: 'Дата наказу',
         accessorKey: 'orderDate',
+        accessorFn: (row) => new Date(row.orderDate),
+        Cell: ({ cell }) => cell.getValue()?.toLocaleDateString('uk-UA'),
       },
     ],
     [],
@@ -52,6 +55,12 @@ const CourseTable = () => {
   const table = useMaterialReactTable({
     columns,
     data: courseData,
+    enablePagination: false,
+    enableBottomToolbar: false,
+    initialState: {
+      showColumnFilters: false,
+      density: 'compact',
+    },
   });
 
   return <MaterialReactTable table={table} />;

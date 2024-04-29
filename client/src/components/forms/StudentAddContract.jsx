@@ -32,6 +32,7 @@ const StudentAddContract = () => {
         data,
       );
       console.log(res.data);
+      navigate('/students');
     } catch (error) {
       console.error(error);
     }
