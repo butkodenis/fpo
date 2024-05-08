@@ -56,4 +56,48 @@ const closeMonth = async (req, res) => {
   }
 };
 
-module.exports = { getAllStudentsBalance, closeMonth };
+const closeMonthStart = async (req, res) => {
+  try {
+    const currentDate = new Date(); // узнаем текущую дату для поиска баланса по периоду
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+
+    // Находим конец предыдущего месяца
+    const endOfLastMonth = new Date(year, month - 1, 0);
+    const lastMonth = endOfLastMonth.getMonth() + 1;
+    const lastYear = endOfLastMonth.getFullYear();
+
+    // баланс студентов на предыдущий месяц с ненулевым балансом на конец месяца
+    const studentsBalance = await StudentsBalance.find({
+      year: lastYear,
+      month: lastMonth,
+      balanceEnd: { $ne: 0 },
+    }).populate('student');
+
+    // создаем новый баланс для текущего месяца
+    const studentsBalanceCurrentMonth = studentsBalance.map((studentBalance) => {
+      const { student, contract, accruedPlan, balanceEnd } = studentBalance;
+      const accrued = accruedPlan.length ? -accruedPlan.shift() : 0; // если массив accruedPlan не пустой, то берем первый элемент и удаляем его из массива
+
+      return {
+        student,
+        contract,
+        balanceStart: balanceEnd,
+        accrued,
+        accruedPlan,
+        payment: 0,
+        balanceEnd: balanceEnd + accrued,
+        year,
+        month,
+      };
+    });
+
+    await StudentsBalance.insertMany(studentsBalanceCurrentMonth);
+
+    res.status(200).json({ message: 'Місяць закрито' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getAllStudentsBalance, closeMonth, closeMonthStart };
