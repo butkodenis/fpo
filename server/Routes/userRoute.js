@@ -11,4 +11,6 @@ router.get('/user/logout', userController.logoutUser);
 
 router.get('/user/info', verifyToken, userController.getUserInfo);
 
+router.get('/user/getAll', userController.getUsers);
+
 module.exports = router;
