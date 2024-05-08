@@ -14,6 +14,7 @@ import StudentsBalance from './components/pages/StudentsBalance';
 import Course from './components/pages/Course';
 import Payment from './components/pages/Payment';
 import PaymentForm from './components/forms/PaymentForm';
+import NotFound from './components/pages/NotFound';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/students/:id/addPayment" element={<PaymentForm />} />
           </Route>
           <Route path="/login2" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

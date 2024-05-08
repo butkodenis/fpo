@@ -1,5 +1,16 @@
 import { useParams, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { Container } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import axios from 'axios';
 
 import FormContract from '../forms/FormContract';
@@ -31,35 +42,37 @@ const StudentCard = () => {
   }, []);
 
   return (
-    <div className="d-flex ">
-      <div className="card">
-        <div className="card-body">
+    <>
+      <Container>
+        <Box>
           {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error: {error.message}</p>
+            <CircularProgress />
           ) : (
-            <>
-              <p className="card-text">
-                <mark>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="h5" component="div">
                   {student.lastName} {student.firstName} {student.middleName}
-                </mark>
-              </p>
-              <p className="card-text">тел.: {student.phone}</p>
-              <p className="card-text">Курси :</p>
-              <hr />
-              {contracts.map((contract, index) => (
-                <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
-              ))}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  тел.: {student.phone}
+                </Typography>
 
-              <Link to="/students" className="btn btn-primary">
-                Повернутися
-              </Link>
-            </>
+                <hr />
+                {contracts.map((contract, index) => (
+                  <FormContract key={index} contract={contract} fetchStudent={fetchStudent} />
+                ))}
+                <hr />
+                <Link to="/students">
+                  <Button variant="contained" color="primary">
+                    Повернутися
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Container>
+    </>
   );
 };
 

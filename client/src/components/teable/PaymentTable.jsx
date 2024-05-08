@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { MRT_Localization_UK } from 'material-react-table/locales/uk';
+import Chip from '@mui/material/Chip';
 
 import axios from 'axios';
 
@@ -28,10 +29,8 @@ const PaymentTable = () => {
         filterVariant: 'range',
         filterFn: 'between',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => (
-          <div className="badge text-bg-primary">{cell.getValue()}</div>
-        ),
-        Cell: ({ cell }) => <div className="badge text-bg-light">{cell.getValue()}</div>,
+        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
+        Cell: ({ cell }) => <Chip label={cell.getValue()} variant="outlined" size="small" />,
       },
 
       {

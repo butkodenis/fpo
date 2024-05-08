@@ -18,14 +18,18 @@ import axios from 'axios';
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchStudents = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/student/getAll`);
       setStudents(res.data);
       //console.log(res.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,7 +75,10 @@ const StudentsTable = () => {
       },
     },
     renderRowActionMenuItems: ({ row }) => [
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box
+        key={row.original._id}
+        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      >
         <List>
           <ListItem>
             <ListItemButton component={Link} to={`/students/${row.original._id}`}>
@@ -112,11 +119,7 @@ const StudentsTable = () => {
     ],
   });
 
-  return (
-    <>
-      <MaterialReactTable table={table} />
-    </>
-  );
+  return <>{isLoading ? <div>Loading...</div> : <MaterialReactTable table={table} />}</>;
 };
 
 export default StudentsTable;

@@ -2,6 +2,18 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Item from '@mui/material/Grid';
+
 const FormContract = ({ contract, fetchStudent }) => {
   const [activeForm, setActiveForm] = useState(false);
   const { register, handleSubmit } = useForm({
@@ -46,178 +58,121 @@ const FormContract = ({ contract, fetchStudent }) => {
 
   return (
     <>
-      <div className="mb-3">
+      <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row">
-            <div className="form-group col-2">
-              <label htmlFor="num">№ договору</label>
-              <input
-                type="number"
-                className="form-control"
-                id="num"
-                defaultValue={contract.num}
-                disabled
-              />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="numDate">Дата укладення</label>
-              <input
+          <Grid container spacing={2}>
+            <Grid item xs={6} sm={2}>
+              <TextField label="Сума" defaultValue={contract.course.price} disabled />
+            </Grid>
+            <Grid item xs={6} sm={2}>
+              <TextField
+                label="Дата оплати"
                 type="date"
-                className="form-control"
-                id="numDate"
-                defaultValue={contract.numDate.split('T')[0]}
-                disabled
-              />
-            </div>
-            {contract.urFullName && (
-              <>
-                <div className="form-group col-5">
-                  <label htmlFor="urFullName">Юр. особа</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="urFullName"
-                    defaultValue={contract.urFullName}
-                    disabled
-                  />
-                </div>
-                <div className="form-group col-2">
-                  <label htmlFor="edrpou">ЄДРПОУ</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="edrpou"
-                    defaultValue={contract.edrpou}
-                    disabled
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <div className="row">
-            <div className="form-group col-2">
-              <label htmlFor="price">Сума</label>
-              <input
-                type="number"
-                className="form-control"
-                id="price"
-                defaultValue={contract.course.price}
-                disabled
-              />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="payDate">Дата оплати</label>
-              <input
-                type="date"
-                className="form-control"
-                id="payDate"
                 disabled={!activeForm}
                 {...register('payDate')}
               />
-            </div>
+            </Grid>
 
-            <div className="form-group col-3">
-              <label htmlFor="part">Оплата частинами</label>
-              <input
+            <Grid item xs={4} sm={5}>
+              {contract.urFullName && (
+                <TextField
+                  label="Юр. особа"
+                  defaultValue={contract.urFullName}
+                  sx={{ width: '100%' }}
+                  disabled
+                />
+              )}
+            </Grid>
+
+            <Grid item xs={4} sm={3}>
+              {contract.urFullName && (
+                <TextField label="ЄДРПОУ" defaultValue={contract.edrpou} disabled />
+              )}
+            </Grid>
+
+            <Grid item xs={4} sm={2}>
+              <TextField label="Оплата частинами" type="number" disabled {...register('part')} />
+            </Grid>
+
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Номер наказу"
                 type="number"
-                className="form-control"
-                id="part"
-                disabled={!activeForm}
-                min={1}
-                max={6}
-                {...register('part')}
-              />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="numOrder">Номер наказу</label>
-              <input
-                type="number"
-                className="form-control"
-                id="numOrder"
-                min={1}
                 disabled={!activeForm}
                 {...register('numOrder')}
               />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-group col-7">
-              <label htmlFor="specialty">Курс</label>
-              <input
-                type="text"
-                className="form-control"
-                id="specialty"
+            </Grid>
+            <Grid item xs={4} sm={6}></Grid>
+            <Grid item xs={4} sm={6}>
+              <TextField
+                label="Курс"
                 defaultValue={contract.course.specialty}
+                sx={{ width: '100%' }}
                 disabled
               />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="typeCourse">Спеціалізація</label>
-              <input
-                type="text"
-                className="form-control"
-                id="typeCourse"
-                defaultValue={contract.course.typeCourse}
-                disabled
-              />
-            </div>
-            <div className="form-group col-2">
-              <label htmlFor="duration">Годин</label>
-              <input
-                type="number"
-                className="form-control"
-                id="duration"
-                defaultValue={contract.course.duration}
-                disabled
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-group col-3">
-              <label htmlFor="startDate">Дата початку</label>
-              <input
+            </Grid>
+
+            <Grid item xs={4} sm={4}>
+              <TextField label="Спеціалізація" defaultValue={contract.course.typeCourse} disabled />
+            </Grid>
+            <Grid item xs={4} sm={2}>
+              <TextField label="Годин" defaultValue={contract.course.duration} disabled />
+            </Grid>
+
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Дата початку"
                 type="date"
-                className="form-control"
-                id="startDate"
+                disabled={!activeForm}
                 {...register('startDate')}
-                disabled={!activeForm}
               />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="endDate">Дата закінчення</label>
-              <input
+            </Grid>
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Дата закінчення"
                 type="date"
-                className="form-control"
-                id="endDate"
-                {...register('endDate')}
                 disabled={!activeForm}
+                {...register('endDate')}
               />
-            </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col-1">
-              <button type="button" className="btn btn-primary" onClick={() => setActiveForm(true)}>
-                <i className="bi bi-pencil-fill"></i>
-              </button>
-            </div>
-            <div className="col-1">
-              {activeForm && (
-                <button type="submit" className="btn btn-primary">
-                  <i className="bi bi-floppy"></i>
-                </button>
-              )}
-            </div>
-            <div className="col-1">
-              {activeForm && (
-                <button type="button" className="btn btn-danger" onClick={deleteContract}>
-                  <i className="bi bi-x-circle-fill"></i>
-                </button>
-              )}
-            </div>
-          </div>
+            </Grid>
+
+            <Grid item xs={4} sm={12}>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setActiveForm(true)}
+                  startIcon={<EditNoteIcon />}
+                >
+                  Редагувати
+                </Button>
+                {activeForm && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    startIcon={<SaveIcon />}
+                  >
+                    Зберегти
+                  </Button>
+                )}
+                {activeForm && (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={deleteContract}
+                    startIcon={<DeleteIcon />}
+                    disabled
+                  >
+                    Видалити
+                  </Button>
+                )}
+              </Stack>
+            </Grid>
+          </Grid>
         </form>
-        <hr />
-      </div>
+        <Divider />
+      </Box>
     </>
   );
 };

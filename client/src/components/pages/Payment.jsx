@@ -1,17 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PaymentTable from '../teable/PaymentTable';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Box from '@mui/material/Box';
 
 const Payment = () => {
   return (
-    <div>
-      <h1>Платежі</h1>
+    <Box>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PaymentTable />
       </LocalizationProvider>
-    </div>
+    </Box>
   );
 };
 
