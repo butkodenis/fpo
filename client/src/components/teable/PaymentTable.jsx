@@ -29,8 +29,7 @@ const PaymentTable = () => {
         filterVariant: 'range',
         filterFn: 'between',
         aggregationFn: 'sum',
-        AggregatedCell: ({ cell }) => <Chip label={cell.getValue()} color="primary" size="small" />,
-        Cell: ({ cell }) => <Chip label={cell.getValue()} variant="outlined" size="small" />,
+        AggregatedCell: ({ cell }) => <div style={{ color: 'blue' }}>{cell.getValue()}</div>,
       },
 
       {

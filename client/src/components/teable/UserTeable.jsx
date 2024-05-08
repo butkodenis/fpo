@@ -26,11 +26,25 @@ const UserTable = () => {
     fetchUsers();
   }, []);
 
-  return (
-    <Box>
-      {isLoading ? <div>Loading...</div> : <Typography variant="h4">User Table</Typography>}
-    </Box>
+  const columns = useMemo(
+    () => [
+      { header: 'ПІБ', accessorKey: 'name' },
+      { header: 'email', accessorKey: 'email' },
+      { header: 'роль', accessorKey: 'role' },
+    ],
+    [],
   );
+
+  const table = useMaterialReactTable({
+    columns,
+    data: users,
+    localization: MRT_Localization_UK,
+    initialState: {
+      density: 'compact',
+    },
+  });
+
+  return <>{isLoading ? <div>Loading...</div> : <MaterialReactTable table={table} />}</>;
 };
 
 export default UserTable;
