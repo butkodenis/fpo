@@ -15,6 +15,7 @@ import Course from './components/pages/Course';
 import Payment from './components/pages/Payment';
 import PaymentForm from './components/forms/PaymentForm';
 import NotFound from './components/pages/NotFound';
+import SignIn from './components/pages/SignIn';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/login" element={<Login />} />
+
             <Route path="/students" element={<Students />} />
             <Route path="/students/:id" element={<StudentCard />} />
             <Route path="/students/add" element={<StudentAdd />} />
@@ -34,7 +35,7 @@ function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/students/:id/addPayment" element={<PaymentForm />} />
           </Route>
-          <Route path="/login2" element={<Login />} />
+          <Route path="/login" element={<SignIn />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
