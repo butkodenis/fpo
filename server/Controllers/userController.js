@@ -8,14 +8,14 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email }); // ищем пользователя в базе данных
 
     if (existingUser) {
-      return res.status(400).json({ message: 'Користувач з таким email вже існує' });
+      return res.status(400).json({ message: 'Користувач з таким email вже існує' }); // если пользователь существует, возвращаем ошибку
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
+    const hashedPassword = await bcrypt.hash(password, 10); // хешируем пароль
+    const newUser = new User({ name, email, password: hashedPassword }); // создаем нового пользователя
     await newUser.save();
 
     return res.status(201).json({ message: 'Користувача створено успішно' });
@@ -26,26 +26,28 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body; // получаем email и пароль из запроса
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Введіть email та пароль' });
+      return res.status(400).json({ message: 'Введіть email та пароль' }); // если email или пароль не введены, возвращаем ошибку
     }
 
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
+      // если пользователя с таким email не существует, возвращаем ошибку
       return res.status(400).json({ message: 'Користувача з таким email не знайдено.' });
     }
-
+    // сравниваем пароль из запроса с паролем из базы данных
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'Неправильний пароль' });
     }
-    // eslint-disable-next-line no-underscore-dangle
-    const token = jwt.sign({ id: existingUser._id }, process.env.TOKEN_KEY, { expiresIn: '1h' });
 
+    // создаем токен для пользователя
+    const token = jwt.sign({ id: existingUser._id }, process.env.TOKEN_KEY, { expiresIn: '1h' });
+    // устанавливаем токен в куки
     res.cookie('token', token, { withCredentials: true, httpOnly: false });
     return res.status(200).json({ message: 'Ви увійшли в систему успішно' });
   } catch (error) {
